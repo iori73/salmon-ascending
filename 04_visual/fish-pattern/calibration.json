@@ -1,0 +1,55 @@
+{
+  "_grounded": "2026-06-21 実物画像(04_visual/lifecycle-stages/)を精査し配色を是正。colorizeが使うのは flank/dorsal/bar_red/bar_dark(+stage1 yolk)。",
+  "1": {
+    "note": "仔魚 alevin(実物: 半透明の銀灰体＋虹色ピンク＋腹下にオレンジ卵黄嚢. OpenCage/USFWS)",
+    "dorsal": "#7E8780",
+    "flank": "#BCC0BC",
+    "belly": "#D6D4CC",
+    "yolk": "#EE7A38"
+  },
+  "2": {
+    "note": "稚魚 parr(実物: 淡い銀オリーブに濃く明瞭な縦パーマーク. Chamberlain図)",
+    "dorsal": "#6E776A",
+    "flank": "#AAAFA4",
+    "belly": "#C4C6BE",
+    "bar_dark": "#343C2E",
+    "bar_count": 10
+  },
+  "3": {
+    "note": "スモルト smolt(実物: 冷たい明るい銀＋暗い鋼青の背・無地. Bukharov水中群)",
+    "dorsal": "#52646A",
+    "flank": "#C3C8CB",
+    "belly": "#DCDFDF"
+  },
+  "4": {
+    "note": "海洋 ocean(実物: 金属光沢の明るい銀＋青緑の背＋白腹・黒点なし. Hornady/NOAA図)",
+    "dorsal": "#3E5A63",
+    "flank": "#C6CBCD",
+    "belly": "#DEE0DF"
+  },
+  "5": {
+    "note": "沿岸 coastal(実物: 明るい銀にうっすら色が差し始める. USFWS銀化成魚)",
+    "dorsal": "#5C6852",
+    "flank": "#ABAE9D",
+    "belly": "#BEC0B5",
+    "bar_dark": "#474F3B"
+  },
+  "6": {
+    "note": "遡上婚姻色 calico(実物: 黄緑〜オリーブ地に暗緑黒バー＋マゼンタ赤紫バーの太い高コントラスト虎縞. Knepp図/Vineyard写真)",
+    "dorsal": "#3A4A2D",
+    "flank": "#9CA356",
+    "belly": "#C7CA7B",
+    "bar_red": "#8C3A59",
+    "bar_dark": "#262F1D",
+    "bar_count": 8
+  },
+  "7": {
+    "note": "産卵後 hocchare(実物: 退色しくすんだ灰オリーブ・まだら・模様の残骸. Andshel)",
+    "dorsal": "#565848",
+    "flank": "#7A7868",
+    "belly": "#8A8D82",
+    "bar_red": "#754C52",
+    "bar_dark": "#312F1E",
+    "bar_count": 8
+  }
+}

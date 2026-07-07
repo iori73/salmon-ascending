@@ -1,0 +1,55 @@
+# === OS / editor ===
+.DS_Store
+.claude/
+
+# === Node / Next.js (05_web) ===
+node_modules/
+.next/
+out/
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env*.local
+
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+
+# === logs / temp / work dirs ===
+*.log
+_scratch/
+.trash_demo_tmp/
+.playwright-mcp/
+screenshots/
+
+# === Obsidian (references vault) ===
+.obsidian/
+**/.trash/
+
+# === Third-party / copyrighted material — do NOT publish ===
+*.pdf
+*.zip
+# saved third-party web pages (Gemini etc.)
+references/ai-conversations/*.html
+references/ai-conversations/*_files/
+
+# === Research paper scans (copyrighted) ===
+02_research/**/*.png
+02_research/**/*.jpg
+02_research/**/*.jpeg
+
+# === Heavy raster assets under 04_visual (keep SVG / scripts / md) ===
+04_visual/**/*.png
+04_visual/**/*.jpg
+04_visual/**/*.jpeg
+04_visual/**/*.pbm
+04_visual/**/*.gif
+04_visual/**/*.mp4
+*.bmp
+
+# === Archived / third-party texture remnants (unused) ===
+04_visual/**/_archive/

@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" font-family="'Noto Serif JP','Yu Mincho','Hiragino Mincho ProN',serif">
+  <!-- ============================================================
+       シロザケ（日本系）海洋回遊マップ
+       一次出典：永沢 亨「サケ科魚類のプロファイル-10 サケ」
+                 SALMON情報 No.6, 2012年3月, 北海道区水産研究所
+                 （回遊経路 図4 = 浦和 2000）
+       補足：Azumaya & Nagasawa 2007（分布水温）／FRA 2024（越冬水温）
+       投影：等距円筒 fx=70+(lon-128)*11  fy=150+(66-lat)*17
+       ============================================================ -->
+  <defs>
+    <marker id="arrowImm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#2E6E8E"/>
+    </marker>
+    <marker id="arrowMat" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#B05B3B"/>
+    </marker>
+    <marker id="arrowSm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#7A6A52"/>
+    </marker>
+  </defs>
+
+  <!-- background (paper) -->
+  <rect x="0" y="0" width="1600" height="1200" fill="#FAF8F1"/>
+
+  <!-- ===================== TITLE BLOCK ===================== -->
+  <text x="70" y="58" font-size="13" letter-spacing="3" fill="#2E6E8E" font-family="'EB Garamond',Garamond,serif" font-style="italic">CHUM SALMON · JAPANESE STOCK · OCEAN MIGRATION</text>
+  <text x="70" y="100" font-size="34" fill="#2A2A28" letter-spacing="2">シロザケ（日本系）の海洋回遊　—　いつ・どこで・何℃</text>
+  <text x="70" y="128" font-size="15" fill="#6A6256">放流から母川回帰まで。月・海域・水温を一次資料からプロット（学名 <tspan font-family="'EB Garamond',Garamond,serif" font-style="italic">Oncorhynchus keta</tspan>）。</text>
+  <line x1="70" y1="143" x2="1530" y2="143" stroke="#2E6E8E" stroke-width="2"/>
+
+  <!-- ===================== MAP PLOT AREA ===================== -->
+  <!-- plot rect (ocean) x:70..1302 y:150..626 -->
+  <rect x="70" y="150" width="1232" height="476" fill="#EFF3F2"/>
+
+  <!-- graticule -->
+  <g stroke="#D7DEDC" stroke-width="1" fill="none">
+    <!-- lon 140,160,180,200(160W),220(140W) -->
+    <line x1="202" y1="150" x2="202" y2="626"/>
+    <line x1="422" y1="150" x2="422" y2="626"/>
+    <line x1="642" y1="150" x2="642" y2="626"/>
+    <line x1="862" y1="150" x2="862" y2="626"/>
+    <line x1="1082" y1="150" x2="1082" y2="626"/>
+    <!-- lat 40,50,60 -->
+    <line x1="70" y1="592" x2="1302" y2="592"/>
+    <line x1="70" y1="422" x2="1302" y2="422"/>
+    <line x1="70" y1="252" x2="1302" y2="252"/>
+  </g>
+  <g font-size="11" fill="#9AA3A0" font-family="'EB Garamond',Garamond,serif">
+    <text x="206" y="622">140°E</text>
+    <text x="426" y="622">160°E</text>
+    <text x="646" y="622">180°</text>
+    <text x="866" y="622">160°W</text>
+    <text x="1086" y="622">140°W</text>
+    <text x="74" y="589">40°N</text>
+    <text x="74" y="419">50°N</text>
+    <text x="74" y="249">60°N</text>
+  </g>
+
+  <!-- ===================== SEA-REGION TEMPERATURE TINTS ===================== -->
+  <!-- colour encodes SST band: blue=cold, green=cool, amber=warm -->
+  <g opacity="0.9">
+    <!-- Okhotsk Sea  (5–10℃) cool-green -->
+    <ellipse cx="320" cy="372" rx="118" ry="92" fill="#A7C0A4" opacity="0.30"/>
+    <!-- NW Pacific overwinter (4–8℃) cold blue -->
+    <ellipse cx="475" cy="556" rx="120" ry="58" fill="#6E9DBA" opacity="0.30"/>
+    <!-- Bering Sea summer feeding (cool) -->
+    <ellipse cx="660" cy="300" rx="150" ry="92" fill="#8FB6BC" opacity="0.28"/>
+    <!-- Gulf of Alaska overwinter (4–7℃) cold blue -->
+    <ellipse cx="985" cy="372" rx="130" ry="78" fill="#6E9DBA" opacity="0.30"/>
+    <!-- Japan coastal departure (>13℃) amber -->
+    <ellipse cx="250" cy="548" rx="60" ry="48" fill="#DDA85B" opacity="0.28"/>
+  </g>
+
+  <!-- ===================== LANDMASSES (stylised) ===================== -->
+  <g fill="#E6DDC8" stroke="#CDC2A4" stroke-width="1.2" stroke-linejoin="round">
+    <!-- Asia mainland + Kamchatka + Chukotka (one mass, Okhotsk = southward bay) -->
+    <path d="M70 560 L114 558 L150 484 L190 412 L210 388
+             L242 320 L312 270 L398 236
+             L414 250 L432 320 L422 405
+             L455 330 L460 252
+             L516 222 L609 200 L702 172 L752 150
+             L70 150 Z"/>
+    <!-- Sakhalin -->
+    <path d="M224 354 L233 384 L230 446 L223 490 L215 458 L218 398 Z"/>
+    <!-- Hokkaido -->
+    <path d="M246 502 C262 520 252 545 235 549 L212 540 L224 508 L240 500 Z"/>
+    <!-- Honshu (tail to bottom) -->
+    <path d="M213 556 L206 590 L198 626 L186 626 L196 596 L205 572 Z"/>
+    <!-- North America / Alaska (right + top-right) -->
+    <path d="M752 150 L1302 150 L1302 626 L1214 560 L1188 472 L1118 402
+             L1042 332 L972 300 L940 268
+             L884 304 L822 336
+             L884 256 L840 212 L788 182 L766 166 Z"/>
+  </g>
+  <!-- Kuril Islands (dotted arc Hokkaido→Kamchatka) -->
+  <g fill="#CDC2A4">
+    <circle cx="262" cy="492" r="3.4"/><circle cx="286" cy="470" r="3.4"/>
+    <circle cx="312" cy="450" r="3.2"/><circle cx="340" cy="432" r="3.2"/>
+    <circle cx="368" cy="418" r="3"/><circle cx="396" cy="408" r="3"/>
+  </g>
+  <!-- Aleutian Islands (dotted arc Kamchatka→Alaska) -->
+  <g fill="#CDC2A4">
+    <circle cx="500" cy="420" r="3.2"/><circle cx="560" cy="418" r="3.2"/>
+    <circle cx="620" cy="414" r="3"/><circle cx="684" cy="408" r="3"/>
+    <circle cx="744" cy="400" r="3"/><circle cx="800" cy="388" r="3.2"/>
+    <circle cx="848" cy="366" r="3.2"/>
+  </g>
+
+  <!-- ===================== SEA LABELS ===================== -->
+  <g font-size="15" fill="#5C6B6A" letter-spacing="1">
+    <text x="280" y="320" text-anchor="middle">オホーツク海</text>
+    <text x="660" y="232" text-anchor="middle">ベーリング海</text>
+    <text x="985" y="318" text-anchor="middle">アラスカ湾</text>
+    <text x="470" y="600" text-anchor="middle">北西太平洋（亜寒帯前線）</text>
+    <text x="880" y="600" text-anchor="middle" fill="#8A9694" font-size="14">北太平洋</text>
+  </g>
+
+  <!-- ===================== MIGRATION ROUTE ===================== -->
+  <!-- immature (juvenile→feeding) legs : teal -->
+  <g fill="none" stroke="#2E6E8E" stroke-width="3.4" stroke-linecap="round">
+    <!-- 1 Japan coast -> Okhotsk -->
+    <path d="M256 540 C268 470 282 420 304 386" marker-end="url(#arrowImm)"/>
+    <!-- 2 Okhotsk -> NW Pacific (through Kuril straits, Oct) -->
+    <path d="M318 410 C334 470 392 520 452 548" marker-end="url(#arrowImm)"/>
+    <!-- 3 NW Pacific -> Bering (spring, north) -->
+    <path d="M498 540 C560 440 600 360 640 318" marker-end="url(#arrowImm)"/>
+    <!-- 4 Bering -> Gulf of Alaska (autumn, SE) -->
+    <path d="M712 312 C800 330 880 346 940 360" marker-end="url(#arrowImm)"/>
+  </g>
+  <!-- 5 seasonal shuttle Bering <-> Gulf (repeated several years) -->
+  <g fill="none" stroke="#7A6A52" stroke-width="2.2" stroke-dasharray="7 6" stroke-linecap="round">
+    <path d="M930 392 C840 412 760 392 712 350" marker-end="url(#arrowSm)"/>
+    <path d="M712 286 C800 274 880 300 944 332" marker-end="url(#arrowSm)"/>
+  </g>
+  <!-- 6 mature spawning return -> Japan (via Kamchatka–Kuril) : terracotta -->
+  <g fill="none" stroke="#B05B3B" stroke-width="3.4" stroke-linecap="round">
+    <path d="M636 322 C520 350 430 360 372 408 C320 452 286 500 262 540" marker-end="url(#arrowMat)"/>
+  </g>
+
+  <!-- ===================== STAGE BADGES (number / month / temp) ===================== -->
+  <!-- helper style: number disc + month + temp -->
+  <g font-family="'Noto Serif JP',serif">
+    <!-- 1 coastal departure -->
+    <g transform="translate(150,656)">
+      <circle cx="10" cy="10" r="11" fill="#2E6E8E"/><text x="10" y="15" text-anchor="middle" font-size="13" fill="#fff" font-family="'EB Garamond',serif">1</text>
+      <text x="30" y="9" font-size="14" fill="#2A2A28">母川・沿岸（放流〜離岸）</text>
+      <text x="30" y="28" font-size="12.5" fill="#6A6256">放流 3–5月／降海 約10日 → 沿岸</text>
+      <text x="30" y="45" font-size="12.5" fill="#B07A2E">SST 13℃ 超で沖合へ（〜7月）・産卵水温 4–10℃</text>
+    </g>
+    <!-- 2 Okhotsk -->
+    <g transform="translate(470,656)">
+      <circle cx="10" cy="10" r="11" fill="#2E6E8E"/><text x="10" y="15" text-anchor="middle" font-size="13" fill="#fff" font-family="'EB Garamond',serif">2</text>
+      <text x="30" y="9" font-size="14" fill="#2A2A28">オホーツク海（最初の夏〜秋）</text>
+      <text x="30" y="28" font-size="12.5" fill="#6A6256"><tspan font-family="'EB Garamond',serif" font-style="italic">8–11月</tspan>　10月に択捉・得撫海峡を通過し南下</text>
+      <text x="30" y="45" font-size="12.5" fill="#3E7B6E">SST 8月&gt;10℃ → 9月以降 5–10℃ → 11月&lt;5℃で離脱</text>
+    </g>
+    <!-- 3 NW Pacific -->
+    <g transform="translate(820,656)">
+      <circle cx="10" cy="10" r="11" fill="#2E6E8E"/><text x="10" y="15" text-anchor="middle" font-size="13" fill="#fff" font-family="'EB Garamond',serif">3</text>
+      <text x="30" y="9" font-size="14" fill="#2A2A28">北西太平洋（海での最初の冬）</text>
+      <text x="30" y="28" font-size="12.5" fill="#6A6256"><tspan font-family="'EB Garamond',serif" font-style="italic">12–5月</tspan>　亜寒帯前線周辺の狭い好適水域で越冬</text>
+      <text x="30" y="45" font-size="12.5" fill="#3C6E8C">SST 4–8℃</text>
+    </g>
+    <!-- 4 Bering -->
+    <g transform="translate(1130,656)">
+      <circle cx="10" cy="10" r="11" fill="#2E6E8E"/><text x="10" y="15" text-anchor="middle" font-size="13" fill="#fff" font-family="'EB Garamond',serif">4</text>
+      <text x="30" y="9" font-size="14" fill="#2A2A28">ベーリング海（索餌・成長）</text>
+      <text x="30" y="28" font-size="12.5" fill="#6A6256"><tspan font-family="'EB Garamond',serif" font-style="italic">6–11月</tspan>　春の昇温で北上し夏〜秋に索餌</text>
+      <text x="30" y="45" font-size="12.5" fill="#6A6256">プランクトン・イカ・ゼラチン質を捕食</text>
+    </g>
+  </g>
+
+  <!-- ===================== ROUTE / TEMP LEGEND (map, top-right) ===================== -->
+  <g transform="translate(1052,168)">
+    <rect x="0" y="0" width="244" height="170" fill="#FBFAF5" stroke="#D7DEDC" stroke-width="1"/>
+    <text x="14" y="24" font-size="12" letter-spacing="2" fill="#2E6E8E" font-family="'EB Garamond',serif" font-style="italic">LEGEND</text>
+    <!-- route -->
+    <line x1="14" y1="44" x2="48" y2="44" stroke="#2E6E8E" stroke-width="3.4" marker-end="url(#arrowImm)"/>
+    <text x="56" y="48" font-size="12.5" fill="#3A3A36">未成魚の回遊（索餌へ）</text>
+    <line x1="14" y1="66" x2="48" y2="66" stroke="#B05B3B" stroke-width="3.4" marker-end="url(#arrowMat)"/>
+    <text x="56" y="70" font-size="12.5" fill="#3A3A36">成魚の産卵回帰</text>
+    <line x1="14" y1="88" x2="48" y2="88" stroke="#7A6A52" stroke-width="2.2" stroke-dasharray="7 6"/>
+    <text x="56" y="92" font-size="12.5" fill="#3A3A36">夏冬の往復（数年）</text>
+    <!-- temp scale -->
+    <text x="14" y="116" font-size="12" fill="#6A6256">海面水温（海域の色）</text>
+    <rect x="14" y="124" width="44" height="14" fill="#6E9DBA"/>
+    <rect x="58" y="124" width="44" height="14" fill="#8FB6BC"/>
+    <rect x="102" y="124" width="44" height="14" fill="#A7C0A4"/>
+    <rect x="146" y="124" width="44" height="14" fill="#DDA85B"/>
+    <text x="14" y="152" font-size="10.5" fill="#8A8576" font-family="'EB Garamond',serif">冷 4℃</text>
+    <text x="150" y="152" font-size="10.5" fill="#8A8576" font-family="'EB Garamond',serif">13℃ 暖</text>
+    <text x="14" y="166" font-size="10.5" fill="#8A8576">分布水温（回遊期）2.7–15.6℃</text>
+  </g>
+
+  <!-- ===================== ANNUAL / MULTI-YEAR TIMELINE ===================== -->
+  <text x="70" y="760" font-size="20" fill="#2A2A28" letter-spacing="1">月別の所在　<tspan font-size="13" fill="#6A6256" font-family="'EB Garamond',serif" font-style="italic">where, month by month</tspan></text>
+  <line x1="70" y1="772" x2="1530" y2="772" stroke="#D7DEDC" stroke-width="1"/>
+
+  <!-- month grid -->
+  <g font-size="12" fill="#9AA3A0" font-family="'EB Garamond',serif" text-anchor="middle">
+    <!-- 12 columns from x=120 step 95 -->
+    <text x="167" y="800">JAN</text><text x="262" y="800">FEB</text><text x="357" y="800">MAR</text>
+    <text x="452" y="800">APR</text><text x="547" y="800">MAY</text><text x="642" y="800">JUN</text>
+    <text x="737" y="800">JUL</text><text x="832" y="800">AUG</text><text x="927" y="800">SEP</text>
+    <text x="1022" y="800">OCT</text><text x="1117" y="800">NOV</text><text x="1212" y="800">DEC</text>
+  </g>
+  <g stroke="#ECECE3" stroke-width="1">
+    <line x1="120" y1="808" x2="120" y2="1030"/><line x1="215" y1="808" x2="215" y2="1030"/>
+    <line x1="310" y1="808" x2="310" y2="1030"/><line x1="405" y1="808" x2="405" y2="1030"/>
+    <line x1="500" y1="808" x2="500" y2="1030"/><line x1="595" y1="808" x2="595" y2="1030"/>
+    <line x1="690" y1="808" x2="690" y2="1030"/><line x1="785" y1="808" x2="785" y2="1030"/>
+    <line x1="880" y1="808" x2="880" y2="1030"/><line x1="975" y1="808" x2="975" y2="1030"/>
+    <line x1="1070" y1="808" x2="1070" y2="1030"/><line x1="1165" y1="808" x2="1165" y2="1030"/>
+    <line x1="1260" y1="808" x2="1260" y2="1030"/>
+  </g>
+
+  <!-- row labels -->
+  <g font-size="13" fill="#3A3A36" text-anchor="end">
+    <text x="1530" y="828" text-anchor="start" font-size="11" fill="#9AA3A0" font-family="'EB Garamond',serif"></text>
+  </g>
+
+  <!-- bars : monthX(m)=120+(m-1)*95 ; bar right = monthX(end)+95 -->
+  <!-- Row 1 河川・沿岸 -->
+  <text x="115" y="831" text-anchor="end" font-size="13" fill="#3A3A36">河川・沿岸</text>
+  <rect x="310" y="816" width="285" height="24" fill="#DDA85B" opacity="0.85"/>
+  <text x="316" y="832" font-size="11.5" fill="#5A3F12">放流〜降海・沿岸（0年目）3–7月</text>
+  <rect x="880" y="816" width="380" height="24" fill="#B05B3B" opacity="0.85"/>
+  <text x="886" y="832" font-size="11.5" fill="#fff">母川回帰（最終年）9–12月</text>
+
+  <!-- Row 2 オホーツク海 -->
+  <text x="115" y="867" text-anchor="end" font-size="13" fill="#3A3A36">オホーツク海</text>
+  <rect x="785" y="852" width="380" height="24" fill="#A7C0A4" opacity="0.9"/>
+  <text x="791" y="868" font-size="11.5" fill="#2E4A3C">最初の夏〜秋（0年目）8–11月 ／ 5–10℃</text>
+
+  <!-- Row 3 北西太平洋（越冬） wrap Dec + Jan–May -->
+  <text x="115" y="903" text-anchor="end" font-size="13" fill="#3A3A36">北西太平洋</text>
+  <rect x="1165" y="888" width="95" height="24" fill="#6E9DBA" opacity="0.9"/>
+  <rect x="120" y="888" width="475" height="24" fill="#6E9DBA" opacity="0.9"/>
+  <text x="126" y="904" font-size="11.5" fill="#15364B">最初の越冬（0→1年目）12–5月 ／ 4–8℃</text>
+
+  <!-- Row 4 ベーリング海 -->
+  <text x="115" y="939" text-anchor="end" font-size="13" fill="#3A3A36">ベーリング海</text>
+  <rect x="595" y="924" width="570" height="24" fill="#8FB6BC" opacity="0.9"/>
+  <text x="601" y="940" font-size="11.5" fill="#1F4148">索餌（1〜数年目）6–11月</text>
+
+  <!-- Row 5 アラスカ湾 wrap -->
+  <text x="115" y="975" text-anchor="end" font-size="13" fill="#3A3A36">アラスカ湾</text>
+  <rect x="1165" y="960" width="95" height="24" fill="#6E9DBA" opacity="0.9"/>
+  <rect x="120" y="960" width="475" height="24" fill="#6E9DBA" opacity="0.9"/>
+  <text x="126" y="976" font-size="11.5" fill="#15364B">越冬（1年目以降）12–5月 ／ 4–7℃</text>
+
+  <!-- repetition note -->
+  <text x="120" y="1014" font-size="12.5" fill="#6A6256">※ <tspan fill="#3A3A36">ベーリング海（夏）⇄ アラスカ湾（冬）</tspan> を 3 冬ほど繰り返し、最後の夏を経て回帰。<tspan fill="#3A3A36">4 年魚（3 冬）が最多</tspan>、4・5 年魚で全体の約 90%。</text>
+
+  <!-- ===================== SOURCES FOOTER ===================== -->
+  <line x1="70" y1="1118" x2="1530" y2="1118" stroke="#2E6E8E" stroke-width="1"/>
+  <text x="70" y="1142" font-size="12.5" fill="#6A6256" font-family="'EB Garamond',serif" font-style="italic">SOURCES</text>
+  <text x="70" y="1162" font-size="12" fill="#6A6256">一次：永沢 亨「サケ科魚類のプロファイル-10 サケ」SALMON情報 No.6, 2012, 北海道区水産研究所（回遊経路 図4 ＝ 浦和 2000）.</text>
+  <text x="70" y="1180" font-size="12" fill="#6A6256">補足：Azumaya &amp; Nagasawa 2007（分布水温 2.7–15.6℃）／水産研究・教育機構「国際漁業資源の現況」R5・サケ日本系, 2024（越冬期 SST 4–8℃ / 4–7℃）.</text>
+</svg>

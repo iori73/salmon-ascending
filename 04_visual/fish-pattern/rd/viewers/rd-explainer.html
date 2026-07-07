@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模様は、どこからくるのか — 反応拡散を手で動かす</title>
+<style>
+  /* 視覚言語: 紙地#FAFAF6・冷青#2E6E8E(抑制)・温土#C4722A(活性化)・明朝+EB Garamond */
+  :root{
+    --paper:#FAFAF6; --ink:#2A2A24; --sub:#6E6A5E; --line:#E0DDD2;
+    --blue:#2E6E8E;  /* 抑制因子 inhibitor */
+    --earth:#C4722A; /* 活性化因子 activator */
+    --panel:#F3F1E9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font:15px/1.7 "Hiragino Mincho ProN","Yu Mincho",YuMincho,"EB Garamond",Georgia,serif;}
+  .gobi{font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 56px;}
+  h1{font-size:25px;font-weight:600;margin:0 0 6px;letter-spacing:.01em;}
+  .lede{font-size:15.5px;color:var(--ink);margin:0 0 4px;max-width:64ch;}
+  .src{font-size:12px;color:var(--sub);margin:2px 0 20px;}
+  .rule{height:2px;width:64px;background:var(--blue);margin:0 0 18px;}
+  .cols{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;}
+  .stage{flex:1 1 380px;min-width:300px;}
+  .panel{flex:0 0 312px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;}
+  canvas{width:100%;max-width:520px;aspect-ratio:1/1;background:var(--paper);
+    border:1px solid var(--line);border-radius:8px;image-rendering:pixelated;cursor:crosshair;display:block;}
+  .narr{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--blue);
+    border-radius:8px;padding:12px 14px;margin:12px 0 0;min-height:62px;}
+  .narr b{color:var(--blue);}
+  .readout{font:12px/1.5 ui-monospace,Menlo,monospace;color:var(--sub);margin-top:8px;}
+  .sec{font-size:11px;color:var(--sub);letter-spacing:.10em;margin:16px 0 6px;
+    border-top:1px solid var(--line);padding-top:11px;}
+  .sec:first-child{border-top:none;padding-top:0;margin-top:0;}
+  .btns{display:flex;flex-wrap:wrap;gap:6px;}
+  button{font-family:inherit;background:#fff;color:var(--ink);border:1px solid var(--line);
+    border-radius:6px;padding:6px 11px;font-size:13px;cursor:pointer;transition:.12s;}
+  button:hover{border-color:var(--blue);}
+  button.go{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0;}
+  label{color:var(--sub);font-size:12.5px;}
+  input[type=range]{flex:1;accent-color:var(--blue);}
+  .val{font:12px ui-monospace,Menlo,monospace;color:var(--ink);min-width:54px;text-align:right;}
+  select{font-family:inherit;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px;}
+  details{margin-top:6px;} summary{cursor:pointer;color:var(--sub);font-size:12.5px;}
+  .legend{font-size:12.5px;color:var(--sub);margin:10px 0 0;}
+  .chip{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:4px;}
+  .eq{font:11.5px/1.5 ui-monospace,Menlo,monospace;color:var(--sub);background:#fff;
+    border:1px solid var(--line);border-radius:6px;padding:9px;margin-top:12px;overflow-x:auto;}
+  .foot{font-size:12px;color:var(--sub);margin-top:26px;max-width:72ch;}
+  .foot a{color:var(--blue);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>模様は、どこからくるのか</h1>
+  <p class="lede">体の表面に、目に見えない二つの物質があると想像してください。ひとつ<span style="color:var(--earth);font-weight:600">（活性化因子）</span>は「ここに色をつくれ」と命じ、自分自身も増やす。もうひとつ<span style="color:var(--blue);font-weight:600">（抑制因子）</span>は「すぐ近くではつくるな」と止め、しかも<em>速く広がる</em>。このせめぎ合いを体じゅうで何千回もくり返すと、ひとりでに規則的な模様が浮かび上がります。</p>
+  <p class="src">アラン・チューリングの発見（1952）を、近藤滋が魚で実証した「生きたチューリング波」。<strong>下の模様は描いたものではなく、数個の数字（パラメータ）から計算で立ち上がっています。</strong></p>
+  <div class="rule"></div>
+
+  <div class="cols">
+    <div class="stage">
+      <canvas id="cv" width="160" height="160"></canvas>
+      <div class="narr gobi" id="narr"><b>まず触ってみる。</b>右の「模様の家族」を押すと、同じ仕組みのまま、数字を変えるだけで斑点・縞・迷路へと姿が変わります。キャンバスをドラッグすると種を足せます。</div>
+      <div class="readout" id="readout">step 0</div>
+      <div class="legend">
+        <span class="chip" style="background:var(--earth)"></span>活性化因子が濃い＝模様（色素）
+        　<span class="chip" style="background:var(--blue)"></span>抑制因子が勝つ＝地色
+      </div>
+      <div class="eq" id="eq"></div>
+    </div>
+
+    <div class="panel gobi">
+      <div class="btns">
+        <button class="go" id="play">▶ 計算をはじめる</button>
+        <button id="reset">↻ リセット</button>
+      </div>
+
+      <div class="sec">① 模様の家族（押すだけ）</div>
+      <div class="btns" id="presets"></div>
+
+      <div class="sec">② サケの各段階（補正済み）</div>
+      <div class="btns" id="salmon"></div>
+
+      <div class="sec">③ 自分で動かす</div>
+      <div class="row"><label>F ＝ 供給の強さ</label><input type="range" id="F" min="0.010" max="0.090" step="0.0005" value="0.0290"><span class="val" id="FV"></span></div>
+      <div class="row"><label>k ＝ 消失の強さ</label><input type="range" id="k" min="0.045" max="0.070" step="0.0005" value="0.0570"><span class="val" id="kV"></span></div>
+      <div class="row"><label>タテ／ヨコの偏り</label><input type="range" id="aniso" min="0.10" max="1.0" step="0.01" value="1.0"><span class="val" id="anisoV"></span></div>
+      <div class="legend">「偏り」を小さくすると拡散がタテ方向に偏り、模様が<em>縦縞</em>に。サケのパーマークや婚姻色の縦バーはこれで出ます。</div>
+
+      <details>
+        <summary>さらに詳しく（拡散係数）</summary>
+        <div class="row"><label>Du 活性化の広がり</label><input type="range" id="Du" min="0.10" max="0.24" step="0.005" value="0.160"><span class="val" id="DuV"></span></div>
+        <div class="row"><label>Dv 抑制の広がり</label><input type="range" id="Dv" min="0.04" max="0.14" step="0.005" value="0.080"><span class="val" id="DvV"></span></div>
+        <div class="row"><label>速度 steps/frame</label><input type="range" id="speed" min="1" max="20" value="7"><span class="val" id="speedV"></span></div>
+        <div class="row"><label>配色</label>
+          <select id="cmap">
+            <option value="sumi">墨（紙地）</option>
+            <option value="parr">稚魚（オリーブ）</option>
+            <option value="calico">婚姻色（赤紫）</option>
+            <option value="ocean">海洋（銀青）</option>
+          </select>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <p class="foot gobi">
+    この道具で確かめられるのは、「同じ方程式のまま、わずかな数字の差で模様が一変する」ということです。だから各段階の模様は<strong>“導出した”のではなく、参照画像に合うよう数字を選んだ（当てはめた）</strong>もの。仕組みは数理由来でも、どれをシロザケと呼ぶかは人の判断です——そこを正直にしておくのが、この連作の方針です。<br>
+    出典：Turing (1952) <i>Phil. Trans. R. Soc. B</i> 237:37；Gray &amp; Scott (1984)／Pearson (1993) <i>Science</i> 261:189；Kondo &amp; Asai (1995) <i>Nature</i> 376:765；Kondo &amp; Miura (2010) <i>Science</i> 329:1616；Kondo (2009) <i>Int. J. Dev. Biol.</i> 53:851. ／ 「サーモンは遡上する」（川野いおり, 2026）。
+  </p>
+</div>
+
+<script>
+const N=160, N2=N*N;
+let U=new Float32Array(N2), V=new Float32Array(N2), Un=new Float32Array(N2), Vn=new Float32Array(N2);
+let F=0.029,k=0.057,Du=0.16,Dv=0.08,ax=1.0,ay=1.0,speed=7,step=0,running=false,cmap="sumi";
+let raf=null, stopAt=6000;
+const cv=document.getElementById("cv"), ctx=cv.getContext("2d"), img=ctx.createImageData(N,N);
+
+function seedNoise(){ for(let i=0;i<N2;i++){U[i]=1;V[i]=0;}
+  for(let n=0;n<N2*0.06;n++){const i=(Math.random()*N2)|0; V[i]=0.5; U[i]=0.25;} step=0; stopAt=6000; }
+function idx(x,y){ x=(x+N)%N; y=(y+N)%N; return y*N+x; }
+
+function stepRD(){
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+    const c=y*N+x;
+    const l=idx(x-1,y), r=idx(x+1,y), u=idx(x,y-1), d=idx(x,y+1);
+    const lapU=ax*(U[l]+U[r]-2*U[c])+ay*(U[u]+U[d]-2*U[c]);
+    const lapV=ax*(V[l]+V[r]-2*V[c])+ay*(V[u]+V[d]-2*V[c]);
+    const uvv=U[c]*V[c]*V[c];
+    Un[c]=U[c]+(Du*lapU-uvv+F*(1-U[c]));
+    Vn[c]=V[c]+(Dv*lapV+uvv-(F+k)*V[c]);
+  }
+  const tU=U;U=Un;Un=tU; const tV=V;V=Vn;Vn=tV; step++;
+}
+
+const CMAPS={
+  sumi:(t)=>mix([250,250,246],[42,42,36],t),
+  parr:(t)=>mix([174,178,166],[57,67,60],t),
+  calico:(t)=>mix([195,194,166], t<0.62?[160,62,85]:[40,48,33], t),
+  ocean:(t)=>mix([200,205,210],[46,72,90],t),
+};
+function mix(a,b,t){t=Math.max(0,Math.min(1,t));return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+
+function render(){
+  let mn=1e9,mx=-1e9; for(let i=0;i<N2;i++){const v=V[i]; if(v<mn)mn=v; if(v>mx)mx=v;}
+  const sc=1/(mx-mn+1e-9), f=CMAPS[cmap], d=img.data;
+  for(let i=0;i<N2;i++){ const t=(V[i]-mn)*sc; const c=f(t); const j=i*4;
+    d[j]=c[0];d[j+1]=c[1];d[j+2]=c[2];d[j+3]=255; }
+  ctx.putImageData(img,0,0);
+  document.getElementById("readout").textContent=`step ${step} · F=${F.toFixed(4)} k=${k.toFixed(4)} · タテヨコ偏り ${ax.toFixed(2)}:${ay.toFixed(2)}`;
+}
+let lastT=0;
+function setPlay(on){ running=on; document.getElementById("play").textContent=on?"⏸ 一時停止":"▶ 計算をはじめる"; if(on) start(); }
+function frame(ts){ raf=null; if(!running) return;
+  if(ts-lastT>=28){ lastT=ts;
+    for(let s=0;s<speed;s++) stepRD(); render();
+    if(step>=stopAt){ running=false; document.getElementById("play").textContent="▶ 再開（収束で自動停止）"; return; } }
+  raf=requestAnimationFrame(frame); }
+function start(){ if(!raf && running) raf=requestAnimationFrame(frame); }
+
+function bind(id,setter,fmt){ const el=document.getElementById(id), v=document.getElementById(id+"V");
+  if(!el) return;
+  const upd=()=>{ setter(parseFloat(el.value)); if(v)v.textContent=fmt?fmt(el.value):el.value; };
+  el.addEventListener("input",upd); upd(); }
+bind("speed",x=>speed=x); bind("F",x=>F=x,v=>(+v).toFixed(4)); bind("k",x=>k=x,v=>(+v).toFixed(4));
+bind("Du",x=>Du=x,v=>(+v).toFixed(2)); bind("Dv",x=>Dv=x,v=>(+v).toFixed(2));
+bind("aniso",x=>{ax=x;ay=2-x;},v=>(+v).toFixed(2)+":"+(2-v).toFixed(2));
+document.getElementById("cmap").addEventListener("change",e=>cmap=e.target.value);
+document.getElementById("play").addEventListener("click",()=>setPlay(!running));
+document.getElementById("reset").addEventListener("click",()=>{seedNoise();setPlay(true);});
+document.addEventListener("visibilitychange",()=>{ if(document.hidden) setPlay(false); });
+
+function setNarr(html){ document.getElementById("narr").innerHTML=html; }
+function setParams(p){ for(const[id,val]of Object.entries(p)){const el=document.getElementById(id);
+    if(el){el.value=val; el.dispatchEvent(new Event("input"));}} seedNoise(); setPlay(true); }
+
+// 模様の家族: 同じ方程式、数字だけ変える
+const PRESETS={
+  "斑点 spots":{p:{F:0.030,k:0.062,aniso:1.0}, note:"<b>斑点。</b>抑制が広く効くと、活性化のピークが点々と等間隔に孤立します。ヒョウの斑のなかま。"},
+  "迷路 maze":{p:{F:0.029,k:0.057,aniso:1.0}, note:"<b>迷路。</b>点がつながると、曲がりくねった連続ストライプ＝迷路に。最初のサケ模様はうっかりここに入っていました。"},
+  "縦縞 stripes":{p:{F:0.029,k:0.057,aniso:0.30}, note:"<b>縦縞。</b>拡散をタテに偏らせると、迷路がほどけて平行な縦線へ。向きは“偏り”が決めます。"},
+  "多孔 holes":{p:{F:0.039,k:0.058,aniso:1.0}, note:"<b>多孔。</b>逆に、地色のなかに穴があく型。同じ系の裏返しです。"},
+};
+// サケ生活史: 記事と整合する補正済みパラメータ(spot域+強い縦異方=離散縦バー)
+const SALMON={
+  "稚魚 parr":{p:{F:0.026,k:0.061,aniso:0.14,cmap:"parr"}, note:"<b>稚魚（パーマーク）。</b>斑点の型を強くタテに伸ばし、<em>離散した縦バー</em>に。連続した迷路ではありません。"},
+  "婚姻色 calico":{p:{F:0.026,k:0.061,aniso:0.16,cmap:"calico"}, note:"<b>婚姻色（カリコ）。</b>太い縦バー＋赤紫。※単一場の近似で、本来の“緑黒と赤の交互”は二色素の連立が要ります。"},
+  "海洋 ocean":{p:{F:0.038,k:0.065,aniso:1.0,cmap:"ocean"}, note:"<b>海洋期。</b>シロザケは<em>大きな黒点を持たない</em>種。だから斑点は出さず、ほぼ無地の銀に寄せます。"},
+};
+function mkPresets(host,obj){ for(const[name,o]of Object.entries(obj)){const b=document.createElement("button");
+  b.textContent=name; b.onclick=()=>{ if(o.p.cmap){document.getElementById("cmap").value=o.p.cmap;cmap=o.p.cmap;}
+    setParams(o.p); setNarr(o.note); }; host.appendChild(b);} }
+mkPresets(document.getElementById("presets"),PRESETS);
+mkPresets(document.getElementById("salmon"),SALMON);
+
+// ドラッグで種を足す
+let painting=false;
+function paint(e){ const r=cv.getBoundingClientRect(); const x=((e.clientX-r.left)/r.width*N)|0, y=((e.clientY-r.top)/r.height*N)|0;
+  for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){ if(dx*dx+dy*dy>16)continue; const i=idx(x+dx,y+dy); V[i]=0.6;U[i]=0.2; } }
+cv.addEventListener("pointerdown",e=>{painting=true;paint(e);});
+cv.addEventListener("pointermove",e=>{if(painting)paint(e);});
+window.addEventListener("pointerup",()=>painting=false);
+
+document.getElementById("eq").textContent="∂u/∂t = Du·∇²u − u·v² + F(1−u)    ∂v/∂t = Dv·∇²v + u·v² − (F+k)·v   〔Gray–Scott〕";
+seedNoise(); render(); setPlay(false);
+</script>
+</body>
+</html>

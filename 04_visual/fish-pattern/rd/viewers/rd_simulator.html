@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>反応拡散シミュレータ — Turing Patterns</title>
+<style>
+  :root{ --bg:#0e1116; --panel:#161b22; --line:#2a313c; --ink:#e6edf3; --sub:#9aa6b2; --teal:#3fb6c9; --accent:#e0875f; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,"Hiragino Kaku Gothic ProN",system-ui,sans-serif}
+  .wrap{display:flex;gap:18px;padding:18px;flex-wrap:wrap;align-items:flex-start;max-width:1100px;margin:0 auto}
+  .stage{flex:1 1 360px;min-width:300px}
+  h1{font-size:18px;margin:0 0 2px;letter-spacing:.02em}
+  .sub{color:var(--sub);font-size:12px;margin:0 0 12px}
+  canvas{width:100%;max-width:520px;aspect-ratio:1/1;background:#000;border:1px solid var(--line);border-radius:6px;image-rendering:pixelated;cursor:crosshair;display:block}
+  .panel{flex:0 0 300px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:9px 0}
+  label{color:var(--sub);font-size:12px}
+  input[type=range]{flex:1;accent-color:var(--teal)}
+  .val{font-variant-numeric:tabular-nums;color:var(--ink);font-size:12px;min-width:48px;text-align:right}
+  .btns{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+  button{background:#1d2530;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:12px;cursor:pointer}
+  button:hover{border-color:var(--teal)}
+  button.go{background:var(--teal);color:#06262b;border-color:var(--teal);font-weight:700}
+  .presets button{background:#12181f}
+  .sec{font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin:14px 0 4px;border-top:1px solid var(--line);padding-top:10px}
+  .readout{font-size:11px;color:var(--sub);font-variant-numeric:tabular-nums;margin-top:6px}
+  .eq{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--sub);background:#0b0f14;border:1px solid var(--line);border-radius:6px;padding:8px;margin-top:10px;overflow-x:auto}
+  select{background:#1d2530;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px}
+  a{color:var(--teal)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage">
+    <h1>反応拡散シミュレータ <span style="color:var(--sub);font-weight:400">— Gray–Scott / Turing</span></h1>
+    <p class="sub">パターンは初期ノイズから<strong>計算で創発</strong>します（近藤滋方式の Turing 系）。スライダーやプリセットで spots↔縞↔網目↔斑点が連続変化。キャンバスをドラッグで種を追加。</p>
+    <canvas id="cv" width="220" height="220"></canvas>
+    <div class="readout" id="readout">step 0 · —</div>
+    <div class="eq" id="eq"></div>
+  </div>
+  <div class="panel">
+    <div class="btns">
+      <button class="go" id="play">⏸ 一時停止</button>
+      <button id="reset">↻ リセット(ノイズ)</button>
+      <button id="clear">クリア</button>
+    </div>
+    <div class="row"><label>速度 steps/frame</label><input type="range" id="speed" min="1" max="20" value="6"><span class="val" id="speedV"></span></div>
+    <div class="sec">反応パラメータ</div>
+    <div class="row"><label>Feed F</label><input type="range" id="F" min="0.010" max="0.090" step="0.0005" value="0.0290"><span class="val" id="FV"></span></div>
+    <div class="row"><label>Kill k</label><input type="range" id="k" min="0.045" max="0.070" step="0.0005" value="0.0570"><span class="val" id="kV"></span></div>
+    <div class="sec">拡散・異方性</div>
+    <div class="row"><label>Du(活性化)</label><input type="range" id="Du" min="0.10" max="0.24" step="0.005" value="0.160"><span class="val" id="DuV"></span></div>
+    <div class="row"><label>Dv(抑制)</label><input type="range" id="Dv" min="0.04" max="0.14" step="0.005" value="0.080"><span class="val" id="DvV"></span></div>
+    <div class="row"><label>異方性 x:y</label><input type="range" id="aniso" min="0.30" max="1.0" step="0.01" value="1.0"><span class="val" id="anisoV"></span></div>
+    <div class="sec">プリセット(模様の家族)</div>
+    <div class="btns presets" id="presets"></div>
+    <div class="sec">サケ生活史</div>
+    <div class="btns presets" id="salmon"></div>
+    <div class="sec">表示</div>
+    <div class="row"><label>配色</label>
+      <select id="cmap">
+        <option value="mono">墨(白黒)</option>
+        <option value="parr">稚魚(オリーブ)</option>
+        <option value="calico">婚姻色(赤紫)</option>
+        <option value="ocean">海洋(銀青)</option>
+        <option value="viridis">viridis</option>
+      </select>
+    </div>
+  </div>
+</div>
+<script>
+const N=160, N2=N*N;
+let U=new Float32Array(N2), V=new Float32Array(N2), Un=new Float32Array(N2), Vn=new Float32Array(N2);
+let F=0.029,k=0.057,Du=0.16,Dv=0.08,ax=1.0,ay=1.0,speed=8,step=0,running=true,cmap="mono";
+let raf=null, stopAt=6000;   // 収束後に自動停止(CPU節約)
+const cv=document.getElementById("cv"), ctx=cv.getContext("2d"), img=ctx.createImageData(N,N);
+
+function seedNoise(){ for(let i=0;i<N2;i++){U[i]=1;V[i]=0;}
+  for(let n=0;n<N2*0.06;n++){const i=(Math.random()*N2)|0; V[i]=0.5; U[i]=0.25;} step=0; stopAt=6000; }
+function clearField(){ for(let i=0;i<N2;i++){U[i]=1;V[i]=0;} step=0; }
+function idx(x,y){ x=(x+N)%N; y=(y+N)%N; return y*N+x; }
+
+function stepRD(){
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+    const c=y*N+x;
+    const l=idx(x-1,y), r=idx(x+1,y), u=idx(x,y-1), d=idx(x,y+1);
+    const lapU=ax*(U[l]+U[r]-2*U[c])+ay*(U[u]+U[d]-2*U[c]);
+    const lapV=ax*(V[l]+V[r]-2*V[c])+ay*(V[u]+V[d]-2*V[c]);
+    const uvv=U[c]*V[c]*V[c];
+    Un[c]=U[c]+(Du*lapU-uvv+F*(1-U[c]));
+    Vn[c]=V[c]+(Dv*lapV+uvv-(F+k)*V[c]);
+  }
+  const tU=U;U=Un;Un=tU; const tV=V;V=Vn;Vn=tV; step++;
+}
+
+const CMAPS={
+  mono:(t)=>[255-255*t,255-255*t,255-247*t],
+  parr:(t)=>mix([168,170,140],[58,61,40],t),
+  calico:(t)=>mix([185,184,132], t<0.6?[181,118,87]:[77,73,52], t),
+  ocean:(t)=>mix([193,187,182],[36,48,52],t),
+  viridis:(t)=>mix([68,1,84], t<0.5?[33,145,140]:[253,231,37], t),
+};
+function mix(a,b,t){t=Math.max(0,Math.min(1,t));return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+
+function render(){
+  let mn=1e9,mx=-1e9; for(let i=0;i<N2;i++){const v=V[i]; if(v<mn)mn=v; if(v>mx)mx=v;}
+  const sc=1/(mx-mn+1e-9), f=CMAPS[cmap], d=img.data;
+  for(let i=0;i<N2;i++){ const t=(V[i]-mn)*sc; const c=f(t); const j=i*4;
+    d[j]=c[0];d[j+1]=c[1];d[j+2]=c[2];d[j+3]=255; }
+  ctx.putImageData(img,0,0);
+  document.getElementById("readout").textContent=`step ${step} · F=${F.toFixed(4)} k=${k.toFixed(4)} · Du/Dv=${Du.toFixed(2)}/${Dv.toFixed(2)} · 異方 ${ax.toFixed(2)}:${ay.toFixed(2)}`;
+}
+let lastT=0;
+function setPlay(on){ running=on; document.getElementById("play").textContent=on?"⏸ 一時停止":"▶ 計算開始"; if(on) start(); }
+function frame(ts){ raf=null; if(!running) return;
+  if(ts-lastT>=28){ lastT=ts;                       // ~33fps に制限(CPU節約)
+    for(let s=0;s<speed;s++) stepRD(); render();
+    if(step>=stopAt){ running=false; document.getElementById("play").textContent="▶ 再開(収束で自動停止)"; return; } }
+  raf=requestAnimationFrame(frame); }
+function start(){ if(!raf && running) raf=requestAnimationFrame(frame); }
+
+// controls
+function bind(id,setter,fmt){ const el=document.getElementById(id), v=document.getElementById(id+"V");
+  const upd=()=>{ setter(parseFloat(el.value)); if(v)v.textContent=fmt?fmt(el.value):el.value; };
+  el.addEventListener("input",upd); upd(); }
+bind("speed",x=>speed=x); bind("F",x=>F=x,v=>(+v).toFixed(4)); bind("k",x=>k=x,v=>(+v).toFixed(4));
+bind("Du",x=>Du=x,v=>(+v).toFixed(2)); bind("Dv",x=>Dv=x,v=>(+v).toFixed(2));
+bind("aniso",x=>{ax=x;ay=2-x;},v=>(+v).toFixed(2)+":"+(2-v).toFixed(2));
+document.getElementById("cmap").addEventListener("change",e=>cmap=e.target.value);
+document.getElementById("play").addEventListener("click",()=>setPlay(!running));
+document.getElementById("reset").addEventListener("click",()=>{seedNoise();setPlay(true);});
+document.getElementById("clear").addEventListener("click",()=>{clearField();render();});
+// CPU節約: タブ非表示で自動一時停止
+document.addEventListener("visibilitychange",()=>{ if(document.hidden) setPlay(false); });
+
+function setParams(p){ for(const[id,val]of Object.entries(p)){const el=document.getElementById(id); if(el){el.value=val; el.dispatchEvent(new Event("input"));}} seedNoise(); setPlay(true); }
+const PRESETS={
+  "斑点 spots":{F:0.030,k:0.062,aniso:1.0}, "サンゴ coral":{F:0.054,k:0.063,aniso:1.0},
+  "迷路 maze":{F:0.029,k:0.057,aniso:1.0}, "多孔 holes":{F:0.039,k:0.058,aniso:1.0},
+  "ワーム worms":{F:0.058,k:0.065,aniso:1.0}, "分裂 mitosis":{F:0.026,k:0.051,aniso:1.0},
+  "縦縞 stripes":{F:0.029,k:0.057,aniso:0.45},
+};
+const SALMON={
+  "稚魚 parr(縦バー)":{F:0.038,k:0.0610,aniso:0.42,cmap:"parr"},
+  "婚姻色 calico(太縦バー)":{F:0.030,k:0.0575,aniso:0.5,cmap:"calico"},
+  "海洋 ocean(微細斑)":{F:0.034,k:0.063,aniso:1.0,cmap:"ocean"},
+};
+function mkPresets(host,obj){ for(const[name,p]of Object.entries(obj)){const b=document.createElement("button");
+  b.textContent=name; b.onclick=()=>{ if(p.cmap){document.getElementById("cmap").value=p.cmap;cmap=p.cmap;} setParams(p); }; host.appendChild(b);} }
+mkPresets(document.getElementById("presets"),PRESETS);
+mkPresets(document.getElementById("salmon"),SALMON);
+
+// paint seeds by dragging
+let painting=false;
+function paint(e){ const r=cv.getBoundingClientRect(); const x=((e.clientX-r.left)/r.width*N)|0, y=((e.clientY-r.top)/r.height*N)|0;
+  for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){ if(dx*dx+dy*dy>16)continue; const i=idx(x+dx,y+dy); V[i]=0.6;U[i]=0.2; } }
+cv.addEventListener("pointerdown",e=>{painting=true;paint(e);});
+cv.addEventListener("pointermove",e=>{if(painting)paint(e);});
+window.addEventListener("pointerup",()=>painting=false);
+
+document.getElementById("eq").textContent="∂u/∂t = Du·∇²u − u·v² + F(1−u)    ∂v/∂t = Dv·∇²v + u·v² − (F+k)·v   [Gray–Scott, 異方ラプラシアン]";
+// 初期は停止状態(クリックで計算開始)=開いただけではCPUを使わない
+seedNoise(); render(); setPlay(false);
+</script>
+</body>
+</html>
