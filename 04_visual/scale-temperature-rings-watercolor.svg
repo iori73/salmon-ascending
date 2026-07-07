@@ -1,0 +1,351 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1040" font-family="'Noto Serif JP','Yu Mincho',serif">
+<defs>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/></filter>
+<filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"/></filter>
+<filter id="edge"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G"/></filter>
+</defs>
+<rect width="1500" height="1040" fill="#F5EFE4"/>
+<rect width="1500" height="1040" filter="url(#paper)" opacity="0.8"/>
+<text x="56" y="56" font-size="13" letter-spacing="3" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">SCALE × WATER TEMPERATURE · 鱗水彩 SUISAI</text>
+<text x="56" y="96" font-size="30" fill="#3A3A36" letter-spacing="2">鱗に水温を重ねる — 水彩テーマ版</text>
+<line x1="56" y1="112" x2="1444" y2="112" stroke="#7FA8C4" stroke-width="2"/>
+<g filter="url(#edge)">
+<circle cx="486" cy="524" r="452.8" fill="#7EA49C"/>
+<circle cx="486" cy="524" r="444.7" fill="#77A2AD"/>
+<circle cx="486" cy="524" r="436.6" fill="#5B7E92"/>
+<circle cx="486" cy="524" r="428.6" fill="#79A4B3"/>
+<circle cx="486" cy="524" r="420.5" fill="#B1BCA0"/>
+<circle cx="486" cy="524" r="412.4" fill="#AEBCA3"/>
+<circle cx="486" cy="524" r="404.3" fill="#AABBA5"/>
+<circle cx="486" cy="524" r="396.2" fill="#7CA39B"/>
+<circle cx="486" cy="524" r="388.1" fill="#78A2AF"/>
+<circle cx="486" cy="524" r="380.0" fill="#6F95AD"/>
+<circle cx="486" cy="524" r="372.0" fill="#42606F"/>
+<circle cx="486" cy="524" r="363.9" fill="#7EA7C1"/>
+<circle cx="486" cy="524" r="355.8" fill="#709D9A"/>
+<circle cx="486" cy="524" r="347.7" fill="#ABBBA5"/>
+<circle cx="486" cy="524" r="339.6" fill="#ADBCA3"/>
+<circle cx="486" cy="524" r="331.5" fill="#A5BAA8"/>
+<circle cx="486" cy="524" r="323.4" fill="#91AFA2"/>
+<circle cx="486" cy="524" r="315.4" fill="#7DA49B"/>
+<circle cx="486" cy="524" r="307.3" fill="#749FA4"/>
+<circle cx="486" cy="524" r="299.2" fill="#7CA6BB"/>
+<circle cx="486" cy="524" r="291.1" fill="#698EA5"/>
+<circle cx="486" cy="524" r="283.0" fill="#436170"/>
+<circle cx="486" cy="524" r="274.9" fill="#395562"/>
+<circle cx="486" cy="524" r="266.8" fill="#405E6D"/>
+<circle cx="486" cy="524" r="258.8" fill="#486778"/>
+<circle cx="486" cy="524" r="250.7" fill="#507082"/>
+<circle cx="486" cy="524" r="242.6" fill="#57798D"/>
+<circle cx="486" cy="524" r="234.5" fill="#608499"/>
+<circle cx="486" cy="524" r="226.4" fill="#6B91A9"/>
+<circle cx="486" cy="524" r="218.3" fill="#769EB8"/>
+<circle cx="486" cy="524" r="210.2" fill="#7FA8C3"/>
+<circle cx="486" cy="524" r="202.1" fill="#7CA6BC"/>
+<circle cx="486" cy="524" r="194.1" fill="#7AA4B6"/>
+<circle cx="486" cy="524" r="186.0" fill="#78A2AF"/>
+<circle cx="486" cy="524" r="177.9" fill="#75A1A9"/>
+<circle cx="486" cy="524" r="169.8" fill="#719D9D"/>
+<circle cx="486" cy="524" r="161.7" fill="#81A69D"/>
+<circle cx="486" cy="524" r="153.6" fill="#9DB6A5"/>
+<circle cx="486" cy="524" r="145.5" fill="#ADBCA3"/>
+<circle cx="486" cy="524" r="137.5" fill="#B7BD9C"/>
+<circle cx="486" cy="524" r="129.4" fill="#C1BE96"/>
+<circle cx="486" cy="524" r="121.3" fill="#C8C098"/>
+<circle cx="486" cy="524" r="113.2" fill="#CEC39C"/>
+<circle cx="486" cy="524" r="105.1" fill="#D4C6A0"/>
+<circle cx="486" cy="524" r="97.0" fill="#DAC8A4"/>
+<circle cx="486" cy="524" r="88.9" fill="#DDBD99"/>
+<circle cx="486" cy="524" r="80.9" fill="#DEA984"/>
+<circle cx="486" cy="524" r="72.8" fill="#DF956E"/>
+<circle cx="486" cy="524" r="64.7" fill="#DF966F"/>
+<circle cx="486" cy="524" r="56.6" fill="#DCC9A6"/>
+<circle cx="486" cy="524" r="48.5" fill="#CDC29B"/>
+<circle cx="486" cy="524" r="40.4" fill="#BBBD9A"/>
+<circle cx="486" cy="524" r="32.3" fill="#B5BD9E"/>
+<circle cx="486" cy="524" r="24.3" fill="#B1BCA0"/>
+<circle cx="486" cy="524" r="16.2" fill="#ADBCA4"/>
+<circle cx="486" cy="524" r="8.1" fill="#A8BBA6"/>
+</g>
+<clipPath id="disk"><circle cx="486" cy="524" r="460.0"/></clipPath>
+<rect x="26" y="64" width="920" height="920" filter="url(#grain)" clip-path="url(#disk)" opacity="0.12"/>
+<g fill="none" stroke="#3A3A36" stroke-opacity="0.20" stroke-width="1">
+<circle cx="486" cy="524" r="16.2"/>
+<circle cx="486" cy="524" r="22.1"/>
+<circle cx="486" cy="524" r="28.3"/>
+<circle cx="486" cy="524" r="34.5"/>
+<circle cx="486" cy="524" r="41.0"/>
+<circle cx="486" cy="524" r="48.1"/>
+<circle cx="486" cy="524" r="56.2"/>
+<circle cx="486" cy="524" r="65.4"/>
+<circle cx="486" cy="524" r="75.3"/>
+<circle cx="486" cy="524" r="84.8"/>
+<circle cx="486" cy="524" r="93.7"/>
+<circle cx="486" cy="524" r="102.3"/>
+<circle cx="486" cy="524" r="110.4"/>
+<circle cx="486" cy="524" r="118.0"/>
+<circle cx="486" cy="524" r="125.3"/>
+<circle cx="486" cy="524" r="132.1"/>
+<circle cx="486" cy="524" r="138.5"/>
+<circle cx="486" cy="524" r="144.6"/>
+<circle cx="486" cy="524" r="150.3"/>
+<circle cx="486" cy="524" r="155.7"/>
+<circle cx="486" cy="524" r="160.8"/>
+<circle cx="486" cy="524" r="165.5"/>
+<circle cx="486" cy="524" r="170.1"/>
+<circle cx="486" cy="524" r="174.3"/>
+<circle cx="486" cy="524" r="178.5"/>
+<circle cx="486" cy="524" r="182.5"/>
+<circle cx="486" cy="524" r="186.4"/>
+<circle cx="486" cy="524" r="190.3"/>
+<circle cx="486" cy="524" r="194.0"/>
+<circle cx="486" cy="524" r="197.7"/>
+<circle cx="486" cy="524" r="201.2"/>
+<circle cx="486" cy="524" r="204.7"/>
+<circle cx="486" cy="524" r="208.1"/>
+<circle cx="486" cy="524" r="211.4"/>
+<circle cx="486" cy="524" r="214.7"/>
+<circle cx="486" cy="524" r="217.8"/>
+<circle cx="486" cy="524" r="220.9"/>
+<circle cx="486" cy="524" r="223.9"/>
+<circle cx="486" cy="524" r="226.8"/>
+<circle cx="486" cy="524" r="229.7"/>
+<circle cx="486" cy="524" r="232.5"/>
+<circle cx="486" cy="524" r="235.2"/>
+<circle cx="486" cy="524" r="237.9"/>
+<circle cx="486" cy="524" r="240.5"/>
+<circle cx="486" cy="524" r="243.1"/>
+<circle cx="486" cy="524" r="245.6"/>
+<circle cx="486" cy="524" r="248.1"/>
+<circle cx="486" cy="524" r="250.5"/>
+<circle cx="486" cy="524" r="253.0"/>
+<circle cx="486" cy="524" r="255.3"/>
+<circle cx="486" cy="524" r="257.6"/>
+<circle cx="486" cy="524" r="259.9"/>
+<circle cx="486" cy="524" r="262.2"/>
+<circle cx="486" cy="524" r="264.4"/>
+<circle cx="486" cy="524" r="266.6"/>
+<circle cx="486" cy="524" r="268.7"/>
+<circle cx="486" cy="524" r="270.8"/>
+<circle cx="486" cy="524" r="272.9"/>
+<circle cx="486" cy="524" r="274.9"/>
+<circle cx="486" cy="524" r="276.9"/>
+<circle cx="486" cy="524" r="278.9"/>
+<circle cx="486" cy="524" r="281.2"/>
+<circle cx="486" cy="524" r="283.6"/>
+<circle cx="486" cy="524" r="286.2"/>
+<circle cx="486" cy="524" r="289.1"/>
+<circle cx="486" cy="524" r="292.2"/>
+<circle cx="486" cy="524" r="295.5"/>
+<circle cx="486" cy="524" r="299.2"/>
+<circle cx="486" cy="524" r="303.1"/>
+<circle cx="486" cy="524" r="307.4"/>
+<circle cx="486" cy="524" r="312.0"/>
+<circle cx="486" cy="524" r="317.0"/>
+<circle cx="486" cy="524" r="322.1"/>
+<circle cx="486" cy="524" r="327.4"/>
+<circle cx="486" cy="524" r="333.0"/>
+<circle cx="486" cy="524" r="338.8"/>
+<circle cx="486" cy="524" r="344.8"/>
+<circle cx="486" cy="524" r="350.4"/>
+<circle cx="486" cy="524" r="355.2"/>
+<circle cx="486" cy="524" r="359.3"/>
+<circle cx="486" cy="524" r="362.7"/>
+<circle cx="486" cy="524" r="365.7"/>
+<circle cx="486" cy="524" r="368.3"/>
+<circle cx="486" cy="524" r="370.4"/>
+<circle cx="486" cy="524" r="372.8"/>
+<circle cx="486" cy="524" r="375.5"/>
+<circle cx="486" cy="524" r="378.5"/>
+<circle cx="486" cy="524" r="381.8"/>
+<circle cx="486" cy="524" r="385.5"/>
+<circle cx="486" cy="524" r="389.6"/>
+<circle cx="486" cy="524" r="394.2"/>
+<circle cx="486" cy="524" r="399.3"/>
+<circle cx="486" cy="524" r="405.0"/>
+<circle cx="486" cy="524" r="410.8"/>
+<circle cx="486" cy="524" r="416.8"/>
+<circle cx="486" cy="524" r="422.9"/>
+<circle cx="486" cy="524" r="427.3"/>
+<circle cx="486" cy="524" r="430.2"/>
+<circle cx="486" cy="524" r="432.4"/>
+<circle cx="486" cy="524" r="435.1"/>
+<circle cx="486" cy="524" r="438.2"/>
+<circle cx="486" cy="524" r="441.8"/>
+</g>
+<g fill="none">
+<circle cx="486" cy="524" r="275.8" stroke="#2B3F4A" stroke-width="3" stroke-opacity="0.5"/>
+<circle cx="486" cy="524" r="368.4" stroke="#2B3F4A" stroke-width="3" stroke-opacity="0.5"/>
+<circle cx="486" cy="524" r="429.5" stroke="#2B3F4A" stroke-width="3" stroke-opacity="0.5"/>
+</g>
+<circle cx="486" cy="524" r="5.5" fill="#3A3A36"/><circle cx="486" cy="524" r="13" fill="none" stroke="#3A3A36" stroke-opacity="0.45"/>
+<text x="486" y="504" text-anchor="middle" font-size="12" fill="#3A3A36" font-family="'EB Garamond',serif" font-style="italic">focus = 孵化</text>
+<line x1="486" y1="524" x2="730" y2="134" stroke="#3A3A36" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.5"/>
+<circle cx="519" cy="471" r="3" fill="#3A3A36"/><text x="527" y="467" font-size="12.5" fill="#3A3A36">スモルト/沿岸離脱</text><text x="527" y="482" font-size="10.5" fill="#6E6658" font-family="'EB Garamond',serif" font-style="italic">peak 13℃</text>
+<circle cx="632" cy="290" r="3" fill="#3A3A36"/><text x="640" y="286" font-size="12.5" fill="#3A3A36">年輪1</text><text x="640" y="301" font-size="10.5" fill="#6E6658" font-family="'EB Garamond',serif" font-style="italic">1st winter 4℃</text>
+<circle cx="681" cy="212" r="3" fill="#3A3A36"/><text x="689" y="208" font-size="12.5" fill="#3A3A36">年輪2</text><text x="689" y="223" font-size="10.5" fill="#6E6658" font-family="'EB Garamond',serif" font-style="italic">2nd winter 4℃</text>
+<circle cx="714" cy="160" r="3" fill="#3A3A36"/><text x="722" y="156" font-size="12.5" fill="#3A3A36">年輪3</text><text x="722" y="171" font-size="10.5" fill="#6E6658" font-family="'EB Garamond',serif" font-style="italic">3rd winter 4℃</text>
+<line x1="978" y1="150" x2="978" y2="980" stroke="#D8CFBE"/>
+<text x="1004" y="176" font-size="13" letter-spacing="2" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">TEMPERATURE → COLOR（鱗水彩）</text>
+<rect x="1004" y="192" width="3.4" height="20" fill="#34505C"/>
+<rect x="1007" y="192" width="3.4" height="20" fill="#375460"/>
+<rect x="1010" y="192" width="3.4" height="20" fill="#3A5865"/>
+<rect x="1013" y="192" width="3.4" height="20" fill="#3E5B69"/>
+<rect x="1016" y="192" width="3.4" height="20" fill="#415F6E"/>
+<rect x="1019" y="192" width="3.4" height="20" fill="#446372"/>
+<rect x="1022" y="192" width="3.4" height="20" fill="#476777"/>
+<rect x="1025" y="192" width="3.4" height="20" fill="#4A6A7B"/>
+<rect x="1028" y="192" width="3.4" height="20" fill="#4E6E80"/>
+<rect x="1031" y="192" width="3.4" height="20" fill="#517284"/>
+<rect x="1034" y="192" width="3.4" height="20" fill="#547689"/>
+<rect x="1037" y="192" width="3.4" height="20" fill="#57798D"/>
+<rect x="1040" y="192" width="3.4" height="20" fill="#5B7D91"/>
+<rect x="1043" y="192" width="3.4" height="20" fill="#5E8196"/>
+<rect x="1046" y="192" width="3.4" height="20" fill="#61859A"/>
+<rect x="1049" y="192" width="3.4" height="20" fill="#64899F"/>
+<rect x="1052" y="192" width="3.4" height="20" fill="#678CA3"/>
+<rect x="1055" y="192" width="3.4" height="20" fill="#6B90A8"/>
+<rect x="1058" y="192" width="3.4" height="20" fill="#6E94AC"/>
+<rect x="1061" y="192" width="3.4" height="20" fill="#7198B1"/>
+<rect x="1064" y="192" width="3.4" height="20" fill="#749BB5"/>
+<rect x="1067" y="192" width="3.4" height="20" fill="#779FBA"/>
+<rect x="1070" y="192" width="3.4" height="20" fill="#7BA3BE"/>
+<rect x="1073" y="192" width="3.4" height="20" fill="#7EA7C3"/>
+<rect x="1076" y="192" width="3.4" height="20" fill="#7FA8C3"/>
+<rect x="1079" y="192" width="3.4" height="20" fill="#7EA7C1"/>
+<rect x="1082" y="192" width="3.4" height="20" fill="#7DA7BF"/>
+<rect x="1085" y="192" width="3.4" height="20" fill="#7CA6BD"/>
+<rect x="1088" y="192" width="3.4" height="20" fill="#7CA6BB"/>
+<rect x="1091" y="192" width="3.4" height="20" fill="#7BA5B9"/>
+<rect x="1094" y="192" width="3.4" height="20" fill="#7AA5B7"/>
+<rect x="1097" y="192" width="3.4" height="20" fill="#7AA4B5"/>
+<rect x="1100" y="192" width="3.4" height="20" fill="#79A4B3"/>
+<rect x="1103" y="192" width="3.4" height="20" fill="#78A3B1"/>
+<rect x="1106" y="192" width="3.4" height="20" fill="#78A3AF"/>
+<rect x="1109" y="192" width="3.4" height="20" fill="#77A2AE"/>
+<rect x="1112" y="192" width="3.4" height="20" fill="#76A1AC"/>
+<rect x="1115" y="192" width="3.4" height="20" fill="#76A1AA"/>
+<rect x="1118" y="192" width="3.4" height="20" fill="#75A0A8"/>
+<rect x="1121" y="192" width="3.4" height="20" fill="#74A0A6"/>
+<rect x="1124" y="192" width="3.4" height="20" fill="#749FA4"/>
+<rect x="1127" y="192" width="3.4" height="20" fill="#739FA2"/>
+<rect x="1130" y="192" width="3.4" height="20" fill="#729EA0"/>
+<rect x="1133" y="192" width="3.4" height="20" fill="#729E9E"/>
+<rect x="1136" y="192" width="3.4" height="20" fill="#719D9C"/>
+<rect x="1139" y="192" width="3.4" height="20" fill="#709D9A"/>
+<rect x="1142" y="192" width="3.4" height="20" fill="#6F9C98"/>
+<rect x="1145" y="192" width="3.4" height="20" fill="#709D97"/>
+<rect x="1148" y="192" width="3.4" height="20" fill="#749F98"/>
+<rect x="1151" y="192" width="3.4" height="20" fill="#77A19A"/>
+<rect x="1154" y="192" width="3.4" height="20" fill="#7BA39B"/>
+<rect x="1157" y="192" width="3.4" height="20" fill="#7EA59C"/>
+<rect x="1160" y="192" width="3.4" height="20" fill="#82A79D"/>
+<rect x="1163" y="192" width="3.4" height="20" fill="#85A99E"/>
+<rect x="1166" y="192" width="3.4" height="20" fill="#89AB9F"/>
+<rect x="1169" y="192" width="3.4" height="20" fill="#8CADA0"/>
+<rect x="1172" y="192" width="3.4" height="20" fill="#90AFA1"/>
+<rect x="1175" y="192" width="3.4" height="20" fill="#94B1A2"/>
+<rect x="1178" y="192" width="3.4" height="20" fill="#97B3A3"/>
+<rect x="1181" y="192" width="3.4" height="20" fill="#9BB5A4"/>
+<rect x="1184" y="192" width="3.4" height="20" fill="#9EB7A6"/>
+<rect x="1187" y="192" width="3.4" height="20" fill="#A2B9A7"/>
+<rect x="1190" y="192" width="3.4" height="20" fill="#A5BBA8"/>
+<rect x="1193" y="192" width="3.4" height="20" fill="#A7BBA7"/>
+<rect x="1196" y="192" width="3.4" height="20" fill="#A8BBA6"/>
+<rect x="1199" y="192" width="3.4" height="20" fill="#A9BBA6"/>
+<rect x="1202" y="192" width="3.4" height="20" fill="#ABBBA5"/>
+<rect x="1205" y="192" width="3.4" height="20" fill="#ACBCA4"/>
+<rect x="1208" y="192" width="3.4" height="20" fill="#ADBCA3"/>
+<rect x="1211" y="192" width="3.4" height="20" fill="#AEBCA2"/>
+<rect x="1214" y="192" width="3.4" height="20" fill="#B0BCA1"/>
+<rect x="1217" y="192" width="3.4" height="20" fill="#B1BCA0"/>
+<rect x="1220" y="192" width="3.4" height="20" fill="#B2BCA0"/>
+<rect x="1223" y="192" width="3.4" height="20" fill="#B3BC9F"/>
+<rect x="1226" y="192" width="3.4" height="20" fill="#B5BD9E"/>
+<rect x="1229" y="192" width="3.4" height="20" fill="#B6BD9D"/>
+<rect x="1232" y="192" width="3.4" height="20" fill="#B7BD9C"/>
+<rect x="1235" y="192" width="3.4" height="20" fill="#B8BD9B"/>
+<rect x="1238" y="192" width="3.4" height="20" fill="#BABD9A"/>
+<rect x="1241" y="192" width="3.4" height="20" fill="#BBBD9A"/>
+<rect x="1244" y="192" width="3.4" height="20" fill="#BCBD99"/>
+<rect x="1247" y="192" width="3.4" height="20" fill="#BDBD98"/>
+<rect x="1250" y="192" width="3.4" height="20" fill="#BFBE97"/>
+<rect x="1253" y="192" width="3.4" height="20" fill="#C0BE96"/>
+<rect x="1256" y="192" width="3.4" height="20" fill="#C1BE95"/>
+<rect x="1259" y="192" width="3.4" height="20" fill="#C2BE94"/>
+<rect x="1262" y="192" width="3.4" height="20" fill="#C3BE94"/>
+<rect x="1265" y="192" width="3.4" height="20" fill="#C4BF95"/>
+<rect x="1268" y="192" width="3.4" height="20" fill="#C5BF95"/>
+<rect x="1271" y="192" width="3.4" height="20" fill="#C6BF96"/>
+<rect x="1274" y="192" width="3.4" height="20" fill="#C7C097"/>
+<rect x="1277" y="192" width="3.4" height="20" fill="#C7C097"/>
+<rect x="1280" y="192" width="3.4" height="20" fill="#C8C098"/>
+<rect x="1283" y="192" width="3.4" height="20" fill="#C9C198"/>
+<rect x="1286" y="192" width="3.4" height="20" fill="#CAC199"/>
+<rect x="1289" y="192" width="3.4" height="20" fill="#CBC199"/>
+<rect x="1292" y="192" width="3.4" height="20" fill="#CBC29A"/>
+<rect x="1295" y="192" width="3.4" height="20" fill="#CCC29B"/>
+<rect x="1298" y="192" width="3.4" height="20" fill="#CDC29B"/>
+<rect x="1301" y="192" width="3.4" height="20" fill="#CEC39C"/>
+<rect x="1304" y="192" width="3.4" height="20" fill="#CFC39C"/>
+<rect x="1307" y="192" width="3.4" height="20" fill="#CFC39D"/>
+<rect x="1310" y="192" width="3.4" height="20" fill="#D0C49E"/>
+<rect x="1313" y="192" width="3.4" height="20" fill="#D1C49E"/>
+<rect x="1316" y="192" width="3.4" height="20" fill="#D2C59F"/>
+<rect x="1319" y="192" width="3.4" height="20" fill="#D3C59F"/>
+<rect x="1322" y="192" width="3.4" height="20" fill="#D3C5A0"/>
+<rect x="1325" y="192" width="3.4" height="20" fill="#D4C6A0"/>
+<rect x="1328" y="192" width="3.4" height="20" fill="#D5C6A1"/>
+<rect x="1331" y="192" width="3.4" height="20" fill="#D6C6A2"/>
+<rect x="1334" y="192" width="3.4" height="20" fill="#D7C7A2"/>
+<rect x="1337" y="192" width="3.4" height="20" fill="#D7C7A3"/>
+<rect x="1340" y="192" width="3.4" height="20" fill="#D8C7A3"/>
+<rect x="1343" y="192" width="3.4" height="20" fill="#D9C8A4"/>
+<rect x="1346" y="192" width="3.4" height="20" fill="#DAC8A4"/>
+<rect x="1349" y="192" width="3.4" height="20" fill="#DBC8A5"/>
+<rect x="1352" y="192" width="3.4" height="20" fill="#DBC9A6"/>
+<rect x="1355" y="192" width="3.4" height="20" fill="#DCC8A5"/>
+<rect x="1358" y="192" width="3.4" height="20" fill="#DCC5A2"/>
+<rect x="1361" y="192" width="3.4" height="20" fill="#DCC29F"/>
+<rect x="1364" y="192" width="3.4" height="20" fill="#DDC09C"/>
+<rect x="1367" y="192" width="3.4" height="20" fill="#DDBD99"/>
+<rect x="1370" y="192" width="3.4" height="20" fill="#DDBA96"/>
+<rect x="1373" y="192" width="3.4" height="20" fill="#DDB793"/>
+<rect x="1376" y="192" width="3.4" height="20" fill="#DDB490"/>
+<rect x="1379" y="192" width="3.4" height="20" fill="#DDB18D"/>
+<rect x="1382" y="192" width="3.4" height="20" fill="#DEAF8A"/>
+<rect x="1385" y="192" width="3.4" height="20" fill="#DEAC87"/>
+<rect x="1388" y="192" width="3.4" height="20" fill="#DEA984"/>
+<rect x="1391" y="192" width="3.4" height="20" fill="#DEA680"/>
+<rect x="1394" y="192" width="3.4" height="20" fill="#DEA37D"/>
+<rect x="1397" y="192" width="3.4" height="20" fill="#DEA07A"/>
+<rect x="1400" y="192" width="3.4" height="20" fill="#DF9E77"/>
+<rect x="1403" y="192" width="3.4" height="20" fill="#DF9B74"/>
+<rect x="1406" y="192" width="3.4" height="20" fill="#DF9871"/>
+<rect x="1409" y="192" width="3.4" height="20" fill="#DF956E"/>
+<rect x="1412" y="192" width="3.4" height="20" fill="#DF926B"/>
+<rect x="1415" y="192" width="3.4" height="20" fill="#DF8F68"/>
+<rect x="1418" y="192" width="3.4" height="20" fill="#E08D65"/>
+<rect x="1421" y="192" width="3.4" height="20" fill="#E08A62"/>
+<text x="1004" y="230" font-size="11" fill="#6E6658" font-family="'EB Garamond',serif">4℃ 藍鼠（越冬・年輪）</text>
+<text x="1424" y="230" text-anchor="end" font-size="11" fill="#6E6658" font-family="'EB Garamond',serif">珊瑚 13℃（沿岸離脱）</text>
+<rect x="1004" y="242" width="22" height="13" fill="#AE6A55"/><text x="1034" y="253" font-size="11" fill="#6E6658">河川遡上〜ほっちゃれ（弁柄・死）</text>
+<text x="1004" y="300" font-size="13" letter-spacing="2" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">RADIUS → STAGE → TEMP</text>
+<rect x="1004" y="320" width="26" height="26" fill="#A6BBA8"/><text x="1040" y="331" font-size="12.5" fill="#3A3A36">r 0　<tspan fill="#6E6658">孵化 focus（卵 4–10℃）</tspan></text><text x="1040" y="345" font-size="11" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">~8℃ 白緑</text>
+<rect x="1004" y="364" width="26" height="26" fill="#E0875F"/><text x="1040" y="375" font-size="12.5" fill="#3A3A36">r 34–82　<tspan fill="#6E6658">仔魚→スモルト/沿岸（〜7月）</tspan></text><text x="1040" y="389" font-size="11" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">13℃ 珊瑚</text>
+<rect x="1004" y="408" width="26" height="26" fill="#6F9C97"/><text x="1040" y="419" font-size="12.5" fill="#3A3A36">r 82–190　<tspan fill="#6E6658">オホーツク海（8–11月）</tspan></text><text x="1040" y="433" font-size="11" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">10→5℃</text>
+<rect x="1004" y="452" width="26" height="26" fill="#34505C"/><text x="1040" y="463" font-size="12.5" fill="#3A3A36">r 190–307　<tspan fill="#6E6658">北西太平洋 越冬／年輪1</tspan></text><text x="1040" y="477" font-size="11" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">4–8℃ 藍鼠</text>
+<rect x="1004" y="496" width="26" height="26" fill="#B0BCA1"/><text x="1040" y="507" font-size="12.5" fill="#3A3A36">r 307–380　<tspan fill="#6E6658">ベーリング索餌（1年目夏）</tspan></text><text x="1040" y="521" font-size="11" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">6–9℃</text>
+<rect x="1004" y="540" width="26" height="26" fill="#34505C"/><text x="1040" y="551" font-size="12.5" fill="#3A3A36">r 380–410　<tspan fill="#6E6658">アラスカ湾 越冬／年輪2</tspan></text><text x="1040" y="565" font-size="11" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">4–7℃ 藍鼠</text>
+<rect x="1004" y="584" width="26" height="26" fill="#7AA4B5"/><text x="1040" y="595" font-size="12.5" fill="#3A3A36">r 410–478　<tspan fill="#6E6658">ベーリング⇄アラスカ湾／年輪3</tspan></text><text x="1040" y="609" font-size="11" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">4–9℃</text>
+<rect x="1004" y="628" width="26" height="26" fill="#8AACA0"/><text x="1040" y="639" font-size="12.5" fill="#3A3A36">r 478–492　<tspan fill="#6E6658">沿岸回帰（9–12月）</tspan></text><text x="1040" y="653" font-size="11" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">〜8℃</text>
+<rect x="1004" y="672" width="26" height="26" fill="#AE6A55"/><text x="1040" y="683" font-size="12.5" fill="#3A3A36">r 492–512　<tspan fill="#6E6658">河川遡上→ほっちゃれ</tspan></text><text x="1040" y="697" font-size="11" fill="#5E7470" font-family="'EB Garamond',serif" font-style="italic">弁柄（死）</text>
+<line x1="1004" y1="730" x2="1424" y2="730" stroke="#D8CFBE"/>
+<text x="1004" y="756" font-size="13" fill="#3A3A36">要点：温度は単調でなく「振動」する</text>
+<text x="1004" y="776" font-size="11.5" fill="#6E6658">・最暖は中心(孵化~8℃)でなく、稚魚→沿岸離脱の帯(~13℃)。</text>
+<text x="1004" y="794" font-size="11.5" fill="#6E6658">・外へ向かって 冷→暖 を3回くり返し、3つの極小(4℃)が</text>
+<text x="1004" y="812" font-size="11.5" fill="#6E6658">　そのまま年輪(越冬)と一致する。</text>
+<text x="1004" y="830" font-size="11.5" fill="#6E6658">・寒い帯＝低成長＝隆起線が密＝藍鼠の細い輪。</text>
+<text x="1004" y="848" font-size="11.5" fill="#6E6658">・暖かい帯＝高成長＝隆起線が疎＝珊瑚の広い輪。</text>
+<text x="56" y="1014" font-size="11" fill="#9A9486" font-family="'EB Garamond',serif" font-style="italic">THEME 鱗水彩 Suisai ／ SOURCE 永沢2012 SALMON情報No.6（図4＝浦和2000）・越冬SST 国際漁業資源R5 2024・分布水温 Azumaya &amp; Nagasawa 2007. 半径は鱗ring 4782:66651 準拠。</text>
+</svg>

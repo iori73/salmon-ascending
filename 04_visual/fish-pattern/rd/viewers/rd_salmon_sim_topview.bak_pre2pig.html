@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>シロザケ7段階 反応拡散シミュレータ（ハイブリッド）</title>
+<style>
+  :root{--bg:#0e1116;--panel:#161b22;--line:#2a313c;--ink:#e6edf3;--sub:#9aa6b2;--teal:#3fb6c9}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,"Hiragino Kaku Gothic ProN",system-ui,sans-serif}
+  .wrap{display:flex;gap:18px;padding:18px;flex-wrap:wrap;max-width:1080px;margin:0 auto}
+  .stage{flex:1 1 420px;min-width:320px}
+  h1{font-size:17px;margin:0 0 2px} .sub{color:var(--sub);font-size:12px;margin:0 0 12px}
+  canvas{width:100%;max-width:560px;background:#f7f4ec;border:1px solid var(--line);border-radius:6px;image-rendering:auto;display:block}
+  .panel{flex:0 0 300px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0}
+  label{color:var(--sub);font-size:12px} input[type=range]{flex:1;accent-color:var(--teal)}
+  .val{font-variant-numeric:tabular-nums;font-size:12px;min-width:46px;text-align:right}
+  .btns{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+  button{background:#1d2530;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:12px;cursor:pointer}
+  button:hover{border-color:var(--teal)} button.go{background:var(--teal);color:#06262b;font-weight:700}
+  button.on{border-color:var(--teal);color:var(--teal)}
+  .sec{font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 4px;border-top:1px solid var(--line);padding-top:9px}
+  .readout{font-size:11px;color:var(--sub);font-variant-numeric:tabular-nums;margin-top:6px}
+  .eq{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--sub);background:#0b0f14;border:1px solid var(--line);border-radius:6px;padding:8px;margin-top:10px}
+  .note{font-size:11px;color:var(--sub);margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage">
+    <h1>シロザケ 7段階 反応拡散シミュレータ <span style="color:var(--sub);font-weight:400">— ハイブリッド3層</span></h1>
+    <p class="sub">魚体の上で <b>Turing模様（計算）＋背腹勾配＋発生状態</b> を合成。模様はノイズから<b>計算で創発</b>します。CPU保護：開いた直後は停止、収束で自動停止、タブ非表示で停止。</p>
+    <canvas id="cv" width="560" height="260"></canvas>
+    <div class="readout" id="readout">— 「▶ 計算開始」を押すと模様が立ち上がります</div>
+    <div class="eq" id="eq">∂u/∂t = Du·∇²u − u·v² + F(1−u)　∂v/∂t = Dv·∇²v + u·v² − (F+k)v　[体内のみ・無流束・異方ラプラシアン]</div>
+  </div>
+  <div class="panel">
+    <div class="sec">生活史段階（7）</div>
+    <div class="btns" id="stages"></div>
+    <div class="btns">
+      <button class="go" id="play">▶ 計算開始</button>
+      <button id="reset">↻ リセット</button>
+    </div>
+    <div class="row"><label>速度</label><input type="range" id="speed" min="1" max="16" value="6"><span class="val" id="speedV"></span></div>
+    <div class="sec">層の内訳（この段階）</div>
+    <div class="note" id="layers"></div>
+    <div class="row"><label>模様の強さ</label><input type="range" id="amp" min="0" max="1" step="0.02" value="0.8"><span class="val" id="ampV"></span></div>
+    <div class="row"><label>異方性 x:y</label><input type="range" id="aniso" min="0.30" max="1.0" step="0.01" value="0.45"><span class="val" id="anisoV"></span></div>
+    <div class="note">Turing=模様(parr/calico/斑) ・ 勾配=背腹のカウンターシェード ・ 発生状態=銀化/婚姻色/退色。Turing単独では7段階全部は出せない（科学的に正確）。</div>
+  </div>
+</div>
+<script>
+// ---------- fish geometry (side view) ----------
+const GW=150, GH=70, GN=GW*GH;   // 粗めグリッド: バー間隔を実バー数(parr~10/calico~8)に較正＋軽量化
+const TOP=[[0,0],[.03,.04],[.08,.075],[.15,.105],[.25,.125],[.36,.13],[.5,.122],[.64,.10],[.78,.066],[.88,.04]];
+const BOT=[[0,0],[.04,.045],[.10,.085],[.20,.115],[.32,.125],[.46,.122],[.60,.10],[.74,.07],[.85,.042],[.88,.036]];
+function interp(prof,t){ t=Math.max(0,Math.min(prof[prof.length-1][0],t));
+  for(let i=0;i<prof.length-1;i++){ if(t<=prof[i+1][0]){ const[a,va]=prof[i],[b,vb]=prof[i+1]; const f=(t-a)/(b-a+1e-9); return va+(vb-va)*f; } } return prof[prof.length-1][1]; }
+const padX=0.07, L=1-2*padX, ox=padX, oy=0.5;
+// build mask + body coords
+const mask=new Uint8Array(GN), Tc=new Float32Array(GN), Mc=new Float32Array(GN);
+function buildFish(){
+  // body via profiles, tail fork, fins, in normalized coords mapped to grid
+  const off=document.createElement("canvas"); off.width=GW; off.height=GH; const o=off.getContext("2d");
+  o.clearRect(0,0,GW,GH); o.fillStyle="#000";
+  const X=t=>(ox+t*L)*GW, Yt=t=>(oy-interp(TOP,t))*GH, Yb=t=>(oy+interp(BOT,t))*GH;
+  o.beginPath(); o.moveTo(X(0),(oy)*GH);
+  for(let t=0;t<=0.88;t+=0.02) o.lineTo(X(t),Yt(t));
+  // tail fork
+  o.lineTo((ox+1.0*L)*GW,(oy-0.15)*GH); o.lineTo((ox+0.95*L)*GW,oy*GH); o.lineTo((ox+1.0*L)*GW,(oy+0.15)*GH);
+  for(let t=0.88;t>=0;t-=0.02) o.lineTo(X(t),Yb(t));
+  o.closePath(); o.fill();
+  // fins (triangles)
+  const fin=(p)=>{o.beginPath();o.moveTo(X(p[0]),(oy-p[1])*GH);o.lineTo(X(p[2]),(oy-p[3])*GH);o.lineTo(X(p[4]),(oy-p[5])*GH);o.closePath();o.fill();};
+  fin([0.40,0.125,0.46,0.215,0.52,0.118]); // dorsal
+  fin([0.74,0.066,0.775,0.105,0.81,0.060]); // adipose
+  fin([0.58,-0.10,0.62,-0.195,0.66,-0.095]); // anal
+  fin([0.20,-0.055,0.27,-0.165,0.30,-0.050]); // pectoral
+  const d=o.getImageData(0,0,GW,GH).data;
+  for(let y=0;y<GH;y++)for(let x=0;x<GW;x++){ const i=y*GW+x; const on=d[i*4+3]>40; mask[i]=on?1:0;
+    const t=(x/GW-ox)/L; const hh=Math.max(interp(TOP,t),interp(BOT,t),1e-3);
+    Tc[i]=Math.max(0,Math.min(1,t)); Mc[i]=((oy-y/GH)/hh); }
+  // borders false
+  for(let x=0;x<GW;x++){mask[x]=0;mask[(GH-1)*GW+x]=0;} for(let y=0;y<GH;y++){mask[y*GW]=0;mask[y*GW+GW-1]=0;}
+}
+buildFish();
+
+// ---------- RD (Gray-Scott, masked no-flux, anisotropic) ----------
+let U=new Float32Array(GN),V=new Float32Array(GN),Un=new Float32Array(GN),Vn=new Float32Array(GN);
+let F=0.038,k=0.061,Du=0.16,Dv=0.08,ax=0.45,ay=1.55,amp=0.8,speed=6,step=0,running=false,raf=null,lastT=0,stopAt=6000;
+function seed(){ for(let i=0;i<GN;i++){U[i]=1;V[i]=0;} if(!cur.patternOn){step=0;return;}
+  for(let i=0;i<GN;i++) if(mask[i] && Math.random()<0.06){V[i]=0.5;U[i]=0.25;} step=0; stopAt=6000; }
+function nb(x,y){ x=(x+GW)%GW; y=(y+GH)%GH; return y*GW+x; }
+function stepRD(){
+  for(let y=1;y<GH-1;y++)for(let x=1;x<GW-1;x++){ const c=y*GW+x; if(!mask[c])continue;
+    const l=c-1,r=c+1,u=c-GW,d=c+GW;
+    const lu=ax*((mask[l]?U[l]:U[c])+(mask[r]?U[r]:U[c])-2*U[c])+ay*((mask[u]?U[u]:U[c])+(mask[d]?U[d]:U[c])-2*U[c]);
+    const lv=ax*((mask[l]?V[l]:V[c])+(mask[r]?V[r]:V[c])-2*V[c])+ay*((mask[u]?V[u]:V[c])+(mask[d]?V[d]:V[c])-2*V[c]);
+    const uvv=U[c]*V[c]*V[c];
+    Un[c]=U[c]+Du*lu-uvv+F*(1-U[c]); Vn[c]=V[c]+Dv*lv+uvv-(F+k)*V[c];
+  }
+  for(let i=0;i<GN;i++) if(mask[i]){U[i]=Un[i];V[i]=Vn[i];} step++;
+}
+
+// ---------- stages (hybrid: Turing + gradient + developmental state) ----------
+const hex=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+const STAGES=[
+ {n:"①仔魚", patternOn:false, F:.038,k:.061,ax:1,ay:1, amp:0, back:"#cfcabd",belly:"#efeee8",bar:"#9a9788",cs:0.3,silver:0,layers:"勾配のみ（模様未形成）"},
+ {n:"②稚魚 parr", patternOn:true, F:.030,k:.0565,ax:.33,ay:1.67, amp:0.9, back:"#5d6340",belly:"#b9b88a",bar:"#33361f",cs:0.7,silver:0,layers:"Turing縦バー(~10)＋勾配"},
+ {n:"③スモルト", patternOn:false, F:.038,k:.061,ax:1,ay:1, amp:0, back:"#5f6f86",belly:"#c6cad6",bar:"#4f566a",cs:0.55,silver:0.75,layers:"発生状態=銀化(模様抑制)＋勾配"},
+ {n:"④海洋", patternOn:true, F:.034,k:.063,ax:1,ay:1, amp:0.18, back:"#243a44",belly:"#c4bdb6",bar:"#1c2a30",cs:0.95,silver:0.25,layers:"強い勾配＋微細斑(Turing)"},
+ {n:"⑤沿岸", patternOn:true, F:.032,k:.0600,ax:.42,ay:1.58, amp:0.4, back:"#5b5d44",belly:"#9a9b80",bar:"#3a3d28",cs:0.6,silver:0.1,layers:"弱いTuring縞＋勾配"},
+ {n:"⑥遡上 calico", patternOn:true, F:.030,k:.0580,ax:.46,ay:1.54, amp:0.95, back:"#5d6340",belly:"#c3c2a8",bar:"#6e4b52",bar2:"#2c3124",red:true,cs:0.55,silver:0,layers:"Turing太縦バー(~8)＋婚姻色(赤紫)＋勾配"},
+ {n:"⑦産卵後", patternOn:true, F:.030,k:.0580,ax:.46,ay:1.54, amp:0.8, back:"#4a4f34",belly:"#75745e",bar:"#6a4b41",bar2:"#2a2a1c",red:true,cs:0.5,silver:0,wear:true,layers:"calico退色＋摩耗＋勾配"},
+];
+let cur=STAGES[1];
+function smooth(t){t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);}
+function render(){
+  const im=ctx2.createImageData(GW,GH), d=im.data;
+  const back=hex(cur.back),belly=hex(cur.belly),bar=hex(cur.bar),bar2=cur.bar2?hex(cur.bar2):bar,silverC=[208,212,220];
+  // normalize V in mask
+  let mn=1e9,mx=-1e9; for(let i=0;i<GN;i++)if(mask[i]){if(V[i]<mn)mn=V[i];if(V[i]>mx)mx=V[i];}
+  const sc=1/(mx-mn+1e-9);
+  for(let i=0;i<GN;i++){ const j=i*4;
+    if(!mask[i]){ d[j]=247;d[j+1]=244;d[j+2]=236;d[j+3]=255; continue; }
+    const cs=smooth((Mc[i]*0.5+0.5)); // 0 belly..1 back
+    let R=belly[0]+(back[0]-belly[0])*Math.pow(cs,1.3)*cur.cs+belly[0]*0,
+        G=belly[1]+(back[1]-belly[1])*Math.pow(cs,1.3)*cur.cs,
+        B=belly[2]+(back[2]-belly[2])*Math.pow(cs,1.3)*cur.cs;
+    R=belly[0]*(1-Math.pow(cs,1.3)*cur.cs)+back[0]*Math.pow(cs,1.3)*cur.cs;
+    G=belly[1]*(1-Math.pow(cs,1.3)*cur.cs)+back[1]*Math.pow(cs,1.3)*cur.cs;
+    B=belly[2]*(1-Math.pow(cs,1.3)*cur.cs)+back[2]*Math.pow(cs,1.3)*cur.cs;
+    // silvering (developmental state)
+    if(cur.silver>0){ R=R*(1-cur.silver)+silverC[0]*cur.silver; G=G*(1-cur.silver)+silverC[1]*cur.silver; B=B*(1-cur.silver)+silverC[2]*cur.silver; }
+    // Turing markings
+    if(cur.patternOn && amp>0){ let m=(V[i]-mn)*sc; m=Math.max(0,(m-0.5)*2)*amp;
+      let up=Math.max(0,Math.min(1,0.35+0.65*cs)); m*=up; // 上半身に偏在
+      const useRed = cur.red && cs<0.75;
+      const mr=useRed?bar[0]:bar2[0], mg=useRed?bar[1]:bar2[1], mb=useRed?bar[2]:bar2[2];
+      R=R*(1-m)+mr*m; G=G*(1-m)+mg*m; B=B*(1-m)+mb*m;
+    }
+    // dorsal dark stripe (positional)
+    const st=Math.exp(-Math.pow(Mc[i]-0.9,2)/(2*0.09*0.09))*0.35;
+    R=R*(1-st)+back[0]*0.3*st; G=G*(1-st)+back[1]*0.3*st; B=B*(1-st)+back[2]*0.3*st;
+    d[j]=R;d[j+1]=G;d[j+2]=B;d[j+3]=255;
+  }
+  ctx2.putImageData(im,0,0);
+  ctx.imageSmoothingEnabled=true; ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.drawImage(off2,0,0,GW,GH,0,0,cv.width,cv.height);
+  document.getElementById("readout").textContent=`${cur.n} · step ${step}${cur.patternOn?` · F=${F.toFixed(4)} k=${k.toFixed(4)} 異方${ax.toFixed(2)}:${ay.toFixed(2)}`:" · 模様なし(状態のみ)"}`;
+  document.getElementById("layers").textContent=cur.layers;
+}
+const cv=document.getElementById("cv"),ctx=cv.getContext("2d");
+const off2=document.createElement("canvas"); off2.width=GW; off2.height=GH; const ctx2=off2.getContext("2d");
+
+// ---------- loop (CPU-safe) ----------
+function setPlay(on){ running=on; document.getElementById("play").textContent=on?"⏸ 一時停止":"▶ 計算開始"; if(on)start(); }
+function frame(ts){ raf=null; if(!running)return;
+  if(ts-lastT>=28){ lastT=ts; if(cur.patternOn)for(let s=0;s<speed;s++)stepRD(); render();
+    if(!cur.patternOn || step>=stopAt){ running=false; document.getElementById("play").textContent="▶ 再開(収束で自動停止)"; return; } }
+  raf=requestAnimationFrame(frame); }
+function start(){ if(!raf&&running)raf=requestAnimationFrame(frame); }
+
+function loadStage(s){ cur=s; F=s.F;k=s.k;ax=s.ax;ay=s.ay;amp=s.amp;
+  document.getElementById("amp").value=amp; document.getElementById("ampV").textContent=amp.toFixed(2);
+  document.getElementById("aniso").value=ax; document.getElementById("anisoV").textContent=ax.toFixed(2)+":"+ay.toFixed(2);
+  [...document.querySelectorAll("#stages button")].forEach(b=>b.classList.toggle("on",b.textContent===s.n));
+  seed(); render(); setPlay(s.patternOn); }
+const sh=document.getElementById("stages");
+STAGES.forEach(s=>{const b=document.createElement("button"); b.textContent=s.n; b.onclick=()=>loadStage(s); sh.appendChild(b);});
+
+document.getElementById("play").addEventListener("click",()=>setPlay(!running));
+document.getElementById("reset").addEventListener("click",()=>{seed();render();setPlay(cur.patternOn);});
+document.getElementById("speed").addEventListener("input",e=>{speed=+e.target.value;document.getElementById("speedV").textContent=speed;});
+document.getElementById("amp").addEventListener("input",e=>{amp=+e.target.value;document.getElementById("ampV").textContent=amp.toFixed(2);render();});
+document.getElementById("aniso").addEventListener("input",e=>{ax=+e.target.value;ay=2-ax;document.getElementById("anisoV").textContent=ax.toFixed(2)+":"+ay.toFixed(2);});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)setPlay(false);});
+document.getElementById("speedV").textContent=speed;
+loadStage(STAGES[1]); setPlay(false);
+</script>
+
+<script>
+/* 真上(背側) softrd ライブ版: 横向きと同じ反応拡散場 V を共有し、体軸プロファイルに集約して毎フレーム描画。
+   模様の生成過程が真上でも立ち上がり、段階/速度/模様の強さ/異方性スライダーに連動する。 */
+(function(){
+const WID=[[0,.004],[.04,.022],[.09,.040],[.15,.054],[.22,.060],[.30,.061],[.40,.056],[.52,.046],[.64,.035],[.76,.024],[.85,.016],[.885,.012]];
+function iWID(u){u=Math.max(0,Math.min(.885,u));for(let i=0;i<WID.length-1;i++){if(u<=WID[i+1][0]){const a=WID[i],b=WID[i+1];return a[1]+(b[1]-a[1])*((u-a[0])/(b[0]-a[0]+1e-9));}}return WID[WID.length-1][1];}
+function bez(bn,u){const v=1-u;return v*v*v*bn[0]+3*v*v*u*bn[1]+3*v*u*u*bn[2]+u*u*u*bn[3];}
+const TG={
+ "①仔魚":{bend:[0,0,0,0],ws:.70,c0:"#EEF2F6",c1:"#DCE3EA",c2:"#BFC9D3",mid:null,bt:"none",yolk:1,eT:.045,eS:.020},
+ "②稚魚 parr":{bend:[0,.04,.04,0],ws:.80,c0:"#B3B79C",c1:"#8C9270",c2:"#5C6446",mid:"#343C2C",bt:"parr",bc:"#2E3727",eT:.05,eS:.026},
+ "③スモルト":{bend:[0,.10,.10,0],ws:.84,c0:"#C9CFD4",c1:"#9AA6B1",c2:"#566B76",mid:"#3C4C58",bt:"none",eT:.05,eS:.028},
+ "④海洋":{bend:[0,.08,.08,0],ws:1.0,c0:"#C2CBCC",c1:"#7E9193",c2:"#39535B",mid:"#22302A",bt:"none",eT:.05,eS:.030},
+ "⑤沿岸":{bend:[.04,.20,-.11,.04],ws:.98,c0:"#ACB096",c1:"#7D8160",c2:"#454D34",mid:"#2C3422",bt:"parr",bc:"#3A4230",eT:.05,eS:.030},
+ "⑥遡上 calico":{bend:[.057,.25,-.14,.057],ws:.92,c0:"#9AA158",c1:"#6E7740",c2:"#33401F",mid:"#26301D",bt:"calico",bc:"#5A3A4E",bd:"#26301D",eT:.05,eS:.030},
+ "⑦産卵後":{bend:[0,.09,.05,0],ws:.84,c0:"#8C8C76",c1:"#65654E",c2:"#3A3A28",mid:"#2A2A1C",bt:"calico",bc:"#6A4B41",bd:"#2A2A1C",eT:.05,eS:.030},
+};
+const Wd=170,Hd=400,Llen=Hd*0.86,TOPy=Hd*0.07,CX=Wd*0.5;
+const stage=document.querySelector('.stage');
+const box=document.createElement('div');
+box.style.cssText='margin-top:12px;background:#faf7f0;border:1px solid #2a313c;border-radius:8px;padding:10px;display:inline-block';
+box.innerHTML='<div style="color:#9aa6b2;font-size:11px;margin-bottom:6px">真上(背側)・softrd — 同じ反応拡散場(GM)から毎フレーム生成（横向きと連動して立ち上がる）</div>';
+const tcv=document.createElement('canvas');tcv.width=Wd;tcv.height=Hd;tcv.style.cssText='display:block;width:'+Wd+'px;height:'+Hd+'px';
+box.appendChild(tcv);stage.appendChild(box);
+const tctx=tcv.getContext('2d');
+const toff=document.createElement('canvas');toff.width=Wd;toff.height=Hd;const toc=toff.getContext('2d');
+let GU=new Float32Array(Wd*Hd),GMv=new Float32Array(Wd*Hd),GIN=new Uint8Array(Wd*Hd),GYK=new Float32Array(Wd*Hd),curG=null,eyePx=[];
+function buildGeom(){
+ const g=TG[cur.n]||TG["②稚魚 parr"];curG=g;
+ const ykU=0.16,ykcx=CX+bez(g.bend,ykU)*Llen,ykcy=TOPy+(1-ykU)*Llen;
+ for(let py=0;py<Hd;py++)for(let px=0;px<Wd;px++){const idx=py*Wd+px;
+   const u=(TOPy+Llen-py)/Llen;const cxoff=bez(g.bend,u)*Llen,hw=iWID(u)*Llen*g.ws;
+   const m=(px-(CX+cxoff))/(hw+1e-6);
+   GU[idx]=u;GMv[idx]=m;GIN[idx]=(u>=0&&u<=0.885&&Math.abs(m)<=1)?1:0;
+   GYK[idx]=g.yolk?Math.exp(-((Math.pow((px-ykcx)/(0.085*Llen),2))+(Math.pow((py-ykcy)/(0.060*Llen),2)))):0;
+ }
+ const eu=g.eT,ecx=CX+bez(g.bend,eu)*Llen,ecy=TOPy+(1-eu)*Llen,es=g.eS*Llen;
+ eyePx=[[ecx-es,ecy],[ecx+es,ecy]];
+}
+function ramp3(c0,c1,c2,f){f=Math.max(0,Math.min(1,f));if(f<.5){const t=2*f;return[c0[0]+(c1[0]-c0[0])*t,c0[1]+(c1[1]-c0[1])*t,c0[2]+(c1[2]-c0[2])*t];}const t=2*f-1;return[c1[0]+(c2[0]-c1[0])*t,c1[1]+(c2[1]-c1[1])*t,c1[2]+(c2[2]-c1[2])*t];}
+const NB=64;let prof=new Float32Array(NB);
+function buildProfile(){
+ const sum=new Float32Array(NB),cnt=new Float32Array(NB);
+ for(let i=0;i<GN;i++)if(mask[i]){const b=Math.min(NB-1,Math.max(0,Math.floor(Tc[i]*(NB-1))));sum[b]+=V[i];cnt[b]++;}
+ let mn=1e9,mx=-1e9;for(let b=0;b<NB;b++){if(cnt[b]>0){sum[b]/=cnt[b];if(sum[b]<mn)mn=sum[b];if(sum[b]>mx)mx=sum[b];}}
+ const sc=1/(mx-mn+1e-9);for(let b=0;b<NB;b++)prof[b]=cnt[b]>0?(sum[b]-mn)*sc:0;
+}
+function pf(u){return prof[Math.min(NB-1,Math.max(0,Math.floor(u*(NB-1))))];}
+function renderTop(){
+ if(!curG)buildGeom();const g=curG;buildProfile();
+ const c0=hex(g.c0),c1=hex(g.c1),c2=hex(g.c2),mid=g.mid?hex(g.mid):null,bc=g.bc?hex(g.bc):null,bd=g.bd?hex(g.bd):null;
+ const yc=[238,122,56],yhi=[246,167,102];
+ const im=toc.createImageData(Wd,Hd),d=im.data;
+ for(let idx=0;idx<Wd*Hd;idx++){const j=idx*4;const yk=GYK[idx];
+   if(!GIN[idx]&&yk<0.05){d[j+3]=0;continue;}
+   const m=GMv[idx],am=Math.abs(m),u=GU[idx];
+   let col=ramp3(c0,c1,c2,am);
+   const rg=Math.exp(-(m*m)/(2*0.0324))*0.10;col=[col[0]*(1-rg)+255*rg,col[1]*(1-rg)+255*rg,col[2]*(1-rg)+255*rg];
+   if(mid){const dm=Math.exp(-(m*m)/(2*0.01))*0.55;col=[col[0]*(1-dm)+mid[0]*dm,col[1]*(1-dm)+mid[1]*dm,col[2]*(1-dm)+mid[2]*dm];}
+   if(g.bt!=="none"&&amp>0){let b=pf(u);
+     if(g.bt==="parr"){b=Math.max(0,(b-0.5)/0.5)*Math.max(0,Math.min(1,0.30+0.70*am))*amp;col=[col[0]*(1-b)+bc[0]*b,col[1]*(1-b)+bc[1]*b,col[2]*(1-b)+bc[2]*b];}
+     else{const fl=Math.max(0,am-0.15)*amp*b;col=[col[0]*(1-fl)+bc[0]*fl,col[1]*(1-fl)+bc[1]*fl,col[2]*(1-fl)+bc[2]*fl];const core=amp*b*Math.exp(-(m*m)/(2*0.0968))*0.6;col=[col[0]*(1-core)+bd[0]*core,col[1]*(1-core)+bd[1]*core,col[2]*(1-core)+bd[2]*core];}
+   }
+   let a=GIN[idx]?255:0;
+   if(yk>0.02){const ya=yk*0.92,k1=[yhi[0]*yk+yc[0]*(1-yk),yhi[1]*yk+yc[1]*(1-yk),yhi[2]*yk+yc[2]*(1-yk)];col=[col[0]*(1-ya)+k1[0]*ya,col[1]*(1-ya)+k1[1]*ya,col[2]*(1-ya)+k1[2]*ya];a=Math.max(a,Math.min(255,ya*255));}
+   d[j]=col[0];d[j+1]=col[1];d[j+2]=col[2];d[j+3]=a;
+ }
+ toc.putImageData(im,0,0);
+ tctx.clearRect(0,0,Wd,Hd);tctx.filter='blur(1.3px)';tctx.drawImage(toff,0,0);tctx.filter='none';
+ const tw=iWID(0.885)*Llen*g.ws,bx=CX+bez(g.bend,0.885)*Llen,by=TOPy+(1-0.885)*Llen,tx=CX+bez(g.bend,1.0)*Llen,ty=TOPy,sp=0.10*Llen;
+ tctx.fillStyle='rgba('+Math.round(c1[0])+','+Math.round(c1[1])+','+Math.round(c1[2])+',0.92)';
+ tctx.beginPath();tctx.moveTo(bx-tw,by);tctx.lineTo(tx-sp,ty);tctx.lineTo(tx,by-0.04*Llen);tctx.lineTo(tx+sp,ty);tctx.lineTo(bx+tw,by);tctx.closePath();tctx.fill();
+ tctx.fillStyle='#282A2E';for(let e=0;e<eyePx.length;e++){tctx.beginPath();tctx.arc(eyePx[e][0],eyePx[e][1],0.0135*Llen,0,7);tctx.fill();}
+}
+const _render=render;render=function(){_render();renderTop();};
+const _load=loadStage;loadStage=function(s){_load(s);buildGeom();renderTop();};
+buildGeom();renderTop();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 940" width="1200" height="940" font-family="'Noto Serif JP','Hiragino Mincho ProN','Yu Mincho',serif">
+  <!--
+    シロザケの一生 ― 3段階 × 7変数 データビジュアライゼーション素案
+    Adobe Fresco 手描き用の下敷き。数値根拠は 02_research/life-stage-variables.md。
+    配色は 04_visual/visual-language-concept.md に準拠。
+    段階カラー: 幼稚魚=#6EB0C4 / 未成魚=#2E6E8E / 成魚=#A83232
+  -->
+  <defs>
+    <filter id="ink" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.016" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <linearGradient id="tempGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3F6E78"/>
+      <stop offset="35%" stop-color="#9DC3CE"/>
+      <stop offset="62%" stop-color="#D9B36A"/>
+      <stop offset="100%" stop-color="#A83232"/>
+    </linearGradient>
+    <marker id="arrowTeal" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="13" refX="11" refY="6.5" orient="auto">
+      <path d="M0,0 L13,6.5 L0,13 Z" fill="#2E6E8E"/>
+    </marker>
+    <marker id="arrowMid" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#6EB0C4"/>
+    </marker>
+    <marker id="arrowOchre" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="11" refX="9" refY="5.5" orient="auto">
+      <path d="M0,0 L11,5.5 L0,11 Z" fill="#8B6E47"/>
+    </marker>
+  </defs>
+
+  <!-- 背景 -->
+  <rect x="0" y="0" width="1200" height="940" fill="#FAFAF6"/>
+
+  <!-- ===== ヘッダ ===== -->
+  <text x="40" y="44" font-size="26" font-weight="600" fill="#2A2A2A">シロザケの一生 ― 3段階でみる7つの変数</text>
+  <text x="40" y="68" font-size="13" fill="#6B6B5F" font-style="italic" font-family="'EB Garamond','Noto Serif JP',serif">Oncorhynchus keta ・ 人工ふ化放流個体 ／ 手描きスケッチの下敷き</text>
+
+  <!-- 列の区切り -->
+  <line x1="500" y1="108" x2="500" y2="862" stroke="#dad4c6" stroke-width="1"/>
+  <line x1="840" y1="108" x2="840" y2="862" stroke="#dad4c6" stroke-width="1"/>
+
+  <!-- 段階ヘッダ（チップ＋旅の矢印） -->
+  <g font-size="15">
+    <circle cx="190" cy="92" r="6" fill="#6EB0C4"/>
+    <text x="204" y="97" font-weight="600" fill="#2A2A2A">幼稚魚</text>
+    <text x="262" y="97" font-size="11" fill="#6B6B5F">当歳・沿岸</text>
+
+    <circle cx="540" cy="92" r="6" fill="#2E6E8E"/>
+    <text x="554" y="97" font-weight="600" fill="#2A2A2A">未成魚</text>
+    <text x="612" y="97" font-size="11" fill="#6B6B5F">外洋 1〜3年</text>
+
+    <circle cx="880" cy="92" r="6" fill="#A83232"/>
+    <text x="894" y="97" font-weight="600" fill="#2A2A2A">成魚</text>
+    <text x="938" y="97" font-size="11" fill="#6B6B5F">回帰 3〜5歳</text>
+
+    <!-- journey arrows -->
+    <line x1="430" y1="92" x2="492" y2="92" stroke="#8B6E47" stroke-width="1.4" stroke-dasharray="4,3" marker-end="url(#arrowOchre)"/>
+    <line x1="770" y1="92" x2="832" y2="92" stroke="#2E6E8E" stroke-width="1.4" stroke-dasharray="4,3" marker-end="url(#arrowTeal)"/>
+  </g>
+  <line x1="40" y1="108" x2="1160" y2="108" stroke="#2E6E8E" stroke-width="1.5"/>
+
+  <!-- ============ 1) 期間（月） ============ -->
+  <text x="148" y="150" text-anchor="end" font-size="14" font-weight="600" fill="#2A2A2A">期間</text>
+  <text x="148" y="166" text-anchor="end" font-size="10" fill="#6B6B5F">（月）</text>
+  <!-- 棒の長さ ∝ 時間（√目盛・海が圧倒的に長い） -->
+  <g>
+    <rect x="180" y="138" width="56" height="14" rx="2" fill="#6EB0C4" filter="url(#ink)"/>
+    <text x="180" y="172" font-size="12" fill="#2A2A2A">沿岸 約1〜2か月</text>
+    <text x="180" y="186" font-size="10" fill="#6B6B5F">放流 3〜5月 →〜6月</text>
+
+    <rect x="520" y="138" width="300" height="14" rx="2" fill="#2E6E8E" filter="url(#ink)"/>
+    <text x="520" y="172" font-size="12" fill="#2A2A2A">海洋 約3〜5年</text>
+    <text x="520" y="186" font-size="10" fill="#6B6B5F">未成魚期＝年1〜年3</text>
+
+    <rect x="860" y="138" width="40" height="14" rx="2" fill="#A83232" filter="url(#ink)"/>
+    <text x="860" y="172" font-size="12" fill="#2A2A2A">河川 2〜3週間</text>
+    <text x="860" y="186" font-size="10" fill="#6B6B5F">回帰 10〜12月・入河後死</text>
+  </g>
+  <text x="1156" y="132" text-anchor="end" font-size="9" fill="#9b9384" font-style="italic">棒＝時間の長さ（海が圧倒的に長い・非線形）</text>
+  <line x1="40" y1="200" x2="1160" y2="200" stroke="#eee7d8" stroke-width="1"/>
+
+  <!-- ============ 2) 大きさ（実比のサケ） ============ -->
+  <text x="148" y="250" text-anchor="end" font-size="14" font-weight="600" fill="#2A2A2A">大きさ</text>
+  <text x="148" y="266" text-anchor="end" font-size="10" fill="#6B6B5F">実比</text>
+  <line x1="160" y1="291" x2="1160" y2="291" stroke="#e3dccb" stroke-width="1"/>
+  <!-- 幼稚魚 5cm (s=0.228) -->
+  <g transform="translate(323,285) scale(0.228,0.228)" filter="url(#ink)">
+    <path d="M2,12 C6,5 18,3 30,4 C40,4 49,6 56,8 L66,1 L60,11 L66,21 C50,16 40,17 30,18 C18,19 8,17 2,12 Z" fill="#6EB0C4" stroke="#6EB0C4" stroke-width="0.5"/>
+    <path d="M31,4 L37,-3 L42,4 Z" fill="#6EB0C4"/><path d="M50,7 L54,3 L56,7 Z" fill="#6EB0C4"/><path d="M24,18 L27,24 L31,18 Z" fill="#6EB0C4"/>
+    <circle cx="9" cy="10" r="1.3" fill="#fafaf6"/><circle cx="9" cy="10" r="0.7" fill="#2a2a2a"/>
+  </g>
+  <text x="330" y="240" text-anchor="middle" font-size="13" font-weight="600" fill="#2A2A2A">5cm / 1g</text>
+  <text x="330" y="255" text-anchor="middle" font-size="10" fill="#6B6B5F">放流時（降海 8〜10cm）</text>
+  <!-- 未成魚 ~30cm (s=1.37) -->
+  <g transform="translate(626,257) scale(1.37,1.37)" filter="url(#ink)">
+    <path d="M2,12 C6,5 18,3 30,4 C40,4 49,6 56,8 L66,1 L60,11 L66,21 C50,16 40,17 30,18 C18,19 8,17 2,12 Z" fill="#2E6E8E" stroke="#2E6E8E" stroke-width="0.5"/>
+    <path d="M31,4 L37,-3 L42,4 Z" fill="#2E6E8E"/><path d="M50,7 L54,3 L56,7 Z" fill="#2E6E8E"/><path d="M24,18 L27,24 L31,18 Z" fill="#2E6E8E"/>
+    <circle cx="9" cy="10" r="1.3" fill="#fafaf6"/><circle cx="9" cy="10" r="0.7" fill="#2a2a2a"/>
+  </g>
+  <text x="670" y="232" text-anchor="middle" font-size="13" font-weight="600" fill="#2A2A2A">~30cm（漸増）</text>
+  <text x="670" y="247" text-anchor="middle" font-size="10" fill="#6B6B5F">5cm→65cm の途上</text>
+  <!-- 成魚 65cm (s=2.97, 婚姻色・kype) -->
+  <g transform="translate(915,219) scale(2.97,2.97)" filter="url(#ink)">
+    <path d="M2,12 C6,5 18,3 30,4 C40,4 49,6 56,8 L66,1 L60,11 L66,21 C50,16 40,17 30,18 C18,19 8,17 2,12 Z" fill="#A83232" stroke="#A83232" stroke-width="0.5"/>
+    <path d="M31,4 L37,-3 L42,4 Z" fill="#A83232"/><path d="M50,7 L54,3 L56,7 Z" fill="#A83232"/><path d="M24,18 L27,24 L31,18 Z" fill="#A83232"/>
+    <path d="M2,11 C-4,9 -6,13 -1,15 L5,13 C3,12 3,11 2,11 Z" fill="#A83232"/>
+    <ellipse cx="28" cy="11" rx="10" ry="3.2" fill="#7a1f1f" opacity="0.4"/>
+    <circle cx="9" cy="10" r="1.3" fill="#fafaf6"/><circle cx="9" cy="10" r="0.7" fill="#2a2a2a"/>
+  </g>
+  <text x="1010" y="232" text-anchor="middle" font-size="13" font-weight="600" fill="#2A2A2A">65cm / 3.7kg</text>
+  <text x="1010" y="247" text-anchor="middle" font-size="10" fill="#6B6B5F">最大 100cm / 18kg・婚姻色</text>
+  <line x1="40" y1="312" x2="1160" y2="312" stroke="#eee7d8" stroke-width="1"/>
+
+  <!-- ============ 3) スピード（矢印長） ============ -->
+  <text x="148" y="360" text-anchor="end" font-size="14" font-weight="600" fill="#2A2A2A">スピード</text>
+  <g>
+    <line x1="180" y1="358" x2="250" y2="358" stroke="#6EB0C4" stroke-width="3" stroke-dasharray="5,4" marker-end="url(#arrowMid)" filter="url(#ink)"/>
+    <text x="180" y="382" font-size="11" fill="#6B6B5F">~1〜3 体長/秒（推定）</text>
+
+    <line x1="520" y1="358" x2="670" y2="358" stroke="#2E6E8E" stroke-width="3" stroke-dasharray="5,4" marker-end="url(#arrowTeal)" filter="url(#ink)"/>
+    <text x="520" y="382" font-size="11" fill="#6B6B5F">推定（成魚と同程度）</text>
+
+    <line x1="860" y1="358" x2="1080" y2="358" stroke="#A83232" stroke-width="3.4" marker-end="url(#arrowTeal)" filter="url(#ink)"/>
+    <text x="860" y="382" font-size="11" fill="#2A2A2A">1.5〜3.0 km/h ≒ 55cm/s（実測）</text>
+  </g>
+  <text x="1156" y="338" text-anchor="end" font-size="9" fill="#9b9384" font-style="italic">実線＝実測 / 破線＝推定</text>
+  <line x1="40" y1="398" x2="1160" y2="398" stroke="#eee7d8" stroke-width="1"/>
+
+  <!-- ============ 4) 深さ（縦帯） ============ -->
+  <text x="148" y="446" text-anchor="end" font-size="14" font-weight="600" fill="#2A2A2A">深さ</text>
+  <text x="148" y="462" text-anchor="end" font-size="10" fill="#6B6B5F">（水深 m）</text>
+  <!-- 深さ軸 0/60/250m : 0->y418, 60->y478, 250->y530 -->
+  <g font-size="9" fill="#9b9384">
+    <line x1="160" y1="418" x2="1160" y2="418" stroke="#cfe0e6" stroke-width="1"/>
+    <text x="156" y="421" text-anchor="end">0m</text>
+    <line x1="160" y1="478" x2="1160" y2="478" stroke="#e3dccb" stroke-width="0.8" stroke-dasharray="3,3"/>
+    <text x="156" y="481" text-anchor="end">60m</text>
+    <line x1="160" y1="530" x2="1160" y2="530" stroke="#e3dccb" stroke-width="0.8" stroke-dasharray="3,3"/>
+    <text x="156" y="533" text-anchor="end">250m</text>
+  </g>
+  <!-- 幼稚魚: 表層 -->
+  <rect x="260" y="418" width="140" height="9" fill="#6EB0C4" opacity="0.65" filter="url(#ink)"/>
+  <text x="330" y="445" text-anchor="middle" font-size="11" fill="#2A2A2A">表層（数m）</text>
+  <!-- 未成魚: 0-60m + 点線 250m -->
+  <rect x="560" y="418" width="220" height="60" fill="#2E6E8E" opacity="0.42" filter="url(#ink)"/>
+  <line x1="670" y1="478" x2="670" y2="530" stroke="#2E6E8E" stroke-width="1.4" stroke-dasharray="3,4"/>
+  <text x="670" y="455" text-anchor="middle" font-size="11" fill="#FAFAF6">0〜60m</text>
+  <text x="700" y="528" font-size="10" fill="#2E6E8E">最大 250m（潜行）</text>
+  <!-- 成魚: 表層 -->
+  <rect x="900" y="418" width="220" height="9" fill="#A83232" opacity="0.6" filter="url(#ink)"/>
+  <text x="1010" y="445" text-anchor="middle" font-size="11" fill="#2A2A2A">表層（満月時さらに浅い）</text>
+  <line x1="40" y1="548" x2="1160" y2="548" stroke="#eee7d8" stroke-width="1"/>
+
+  <!-- ============ 5) 水温（色帯） ============ -->
+  <text x="148" y="596" text-anchor="end" font-size="14" font-weight="600" fill="#2A2A2A">水温</text>
+  <text x="148" y="612" text-anchor="end" font-size="10" fill="#6B6B5F">0〜24°C</text>
+  <!-- 各列: 0-24°Cスケール(幅220)＋該当レンジをブラケット -->
+  <!-- fry: 5-13 of 0-24 => 0.208..0.542 -->
+  <g>
+    <rect x="220" y="572" width="220" height="12" rx="2" fill="url(#tempGrad)" opacity="0.5"/>
+    <rect x="265.8" y="570" width="73.5" height="16" rx="2" fill="none" stroke="#2A2A2A" stroke-width="1.4"/>
+    <text x="330" y="606" text-anchor="middle" font-size="12" fill="#2A2A2A">5〜13°C（放流適温）</text>
+  </g>
+  <!-- immature: 8-12 of 0-24 => 0.333..0.5 -->
+  <g>
+    <rect x="560" y="572" width="220" height="12" rx="2" fill="url(#tempGrad)" opacity="0.5"/>
+    <rect x="633.3" y="570" width="36.7" height="16" rx="2" fill="none" stroke="#2A2A2A" stroke-width="1.4"/>
+    <text x="670" y="606" text-anchor="middle" font-size="12" fill="#2A2A2A">8〜12°C（機能適温）</text>
+  </g>
+  <!-- adult: full tolerance 0-24 -->
+  <g>
+    <rect x="900" y="572" width="220" height="12" rx="2" fill="url(#tempGrad)"/>
+    <text x="1010" y="606" text-anchor="middle" font-size="12" fill="#2A2A2A">0〜24°C（種の耐性・サケ類最高）</text>
+  </g>
+  <line x1="40" y1="624" x2="1160" y2="624" stroke="#eee7d8" stroke-width="1"/>
+
+  <!-- ============ 6) 摂餌 ============ -->
+  <text x="148" y="676" text-anchor="end" font-size="14" font-weight="600" fill="#2A2A2A">摂餌</text>
+  <!-- fry: plankton dots -->
+  <g fill="#8B6E47">
+    <circle cx="240" cy="660" r="2.4"/><circle cx="252" cy="666" r="2"/><circle cx="246" cy="672" r="2.6"/><circle cx="260" cy="660" r="2.2"/><circle cx="268" cy="670" r="2"/>
+  </g>
+  <text x="300" y="664" font-size="12" fill="#2A2A2A">動物プランクトン・橈脚類</text>
+  <text x="300" y="680" font-size="11" fill="#C4722A">給餌量 体重 約3%/日（10°C）</text>
+  <!-- immature: small fish -->
+  <g transform="translate(560,656) scale(0.42,0.42)" filter="url(#ink)" fill="#2E6E8E">
+    <path d="M2,12 C6,5 18,3 30,4 C40,4 49,6 56,8 L66,1 L60,11 L66,21 C50,16 40,17 30,18 C18,19 8,17 2,12 Z" stroke="#2E6E8E" stroke-width="0.5"/>
+    <path d="M31,4 L37,-3 L42,4 Z"/><path d="M24,18 L27,24 L31,18 Z"/>
+  </g>
+  <g fill="#2E6E8E"><circle cx="592" cy="660" r="2"/><circle cx="600" cy="668" r="1.8"/></g>
+  <text x="620" y="664" font-size="12" fill="#2A2A2A">小魚・カイアシ・翼足類</text>
+  <text x="620" y="680" font-size="11" fill="#6B6B5F">活発に摂餌＝成長期（栄養段階 3.7）</text>
+  <!-- adult: fasting X -->
+  <g stroke="#A83232" stroke-width="3.2" stroke-linecap="round">
+    <line x1="888" y1="654" x2="906" y2="672"/><line x1="906" y1="654" x2="888" y2="672"/>
+  </g>
+  <text x="920" y="664" font-size="12" font-weight="600" fill="#A83232">絶食（=0）</text>
+  <text x="920" y="680" font-size="11" fill="#6B6B5F">入河後は食べず体内脂肪で泳ぐ</text>
+  <line x1="40" y1="698" x2="1160" y2="698" stroke="#eee7d8" stroke-width="1"/>
+
+  <!-- ============ 7) 生存率（減っていく点の漏斗） ============ -->
+  <text x="148" y="772" text-anchor="end" font-size="14" font-weight="600" fill="#2A2A2A">生存率</text>
+  <!-- 漏斗の地 -->
+  <path d="M180,716 L470,716 L1070,830 L1070,856 L470,742 L180,742 Z" fill="#6EB0C4" opacity="0.14" filter="url(#ink)"/>
+  <!-- 放流100尾（10×10） -->
+  <g fill="#6EB0C4">
+    <!-- 行0 -->
+    <circle cx="186" cy="722" r="3"/><circle cx="198" cy="722" r="3"/><circle cx="210" cy="722" r="3"/><circle cx="222" cy="722" r="3"/><circle cx="234" cy="722" r="3"/><circle cx="246" cy="722" r="3"/><circle cx="258" cy="722" r="3"/><circle cx="270" cy="722" r="3"/><circle cx="282" cy="722" r="3"/><circle cx="294" cy="722" r="3"/>
+    <circle cx="186" cy="734" r="3"/><circle cx="198" cy="734" r="3"/><circle cx="210" cy="734" r="3"/><circle cx="222" cy="734" r="3"/><circle cx="234" cy="734" r="3"/><circle cx="246" cy="734" r="3"/><circle cx="258" cy="734" r="3"/><circle cx="270" cy="734" r="3"/><circle cx="282" cy="734" r="3"/><circle cx="294" cy="734" r="3"/>
+    <circle cx="186" cy="746" r="3"/><circle cx="198" cy="746" r="3"/><circle cx="210" cy="746" r="3"/><circle cx="222" cy="746" r="3"/><circle cx="234" cy="746" r="3"/><circle cx="246" cy="746" r="3"/><circle cx="258" cy="746" r="3"/><circle cx="270" cy="746" r="3"/><circle cx="282" cy="746" r="3"/><circle cx="294" cy="746" r="3"/>
+    <circle cx="186" cy="758" r="3"/><circle cx="198" cy="758" r="3"/><circle cx="210" cy="758" r="3"/><circle cx="222" cy="758" r="3"/><circle cx="234" cy="758" r="3"/><circle cx="246" cy="758" r="3"/><circle cx="258" cy="758" r="3"/><circle cx="270" cy="758" r="3"/><circle cx="282" cy="758" r="3"/><circle cx="294" cy="758" r="3"/>
+    <circle cx="186" cy="770" r="3"/><circle cx="198" cy="770" r="3"/><circle cx="210" cy="770" r="3"/><circle cx="222" cy="770" r="3"/><circle cx="234" cy="770" r="3"/><circle cx="246" cy="770" r="3"/><circle cx="258" cy="770" r="3"/><circle cx="270" cy="770" r="3"/><circle cx="282" cy="770" r="3"/><circle cx="294" cy="770" r="3"/>
+    <circle cx="186" cy="782" r="3"/><circle cx="198" cy="782" r="3"/><circle cx="210" cy="782" r="3"/><circle cx="222" cy="782" r="3"/><circle cx="234" cy="782" r="3"/><circle cx="246" cy="782" r="3"/><circle cx="258" cy="782" r="3"/><circle cx="270" cy="782" r="3"/><circle cx="282" cy="782" r="3"/><circle cx="294" cy="782" r="3"/>
+    <circle cx="186" cy="794" r="3"/><circle cx="198" cy="794" r="3"/><circle cx="210" cy="794" r="3"/><circle cx="222" cy="794" r="3"/><circle cx="234" cy="794" r="3"/><circle cx="246" cy="794" r="3"/><circle cx="258" cy="794" r="3"/><circle cx="270" cy="794" r="3"/><circle cx="282" cy="794" r="3"/><circle cx="294" cy="794" r="3"/>
+    <circle cx="186" cy="806" r="3"/><circle cx="198" cy="806" r="3"/><circle cx="210" cy="806" r="3"/><circle cx="222" cy="806" r="3"/><circle cx="234" cy="806" r="3"/><circle cx="246" cy="806" r="3"/><circle cx="258" cy="806" r="3"/><circle cx="270" cy="806" r="3"/><circle cx="282" cy="806" r="3"/><circle cx="294" cy="806" r="3"/>
+    <circle cx="186" cy="818" r="3"/><circle cx="198" cy="818" r="3"/><circle cx="210" cy="818" r="3"/><circle cx="222" cy="818" r="3"/><circle cx="234" cy="818" r="3"/><circle cx="246" cy="818" r="3"/><circle cx="258" cy="818" r="3"/><circle cx="270" cy="818" r="3"/><circle cx="282" cy="818" r="3"/><circle cx="294" cy="818" r="3"/>
+    <circle cx="186" cy="830" r="3"/><circle cx="198" cy="830" r="3"/><circle cx="210" cy="830" r="3"/><circle cx="222" cy="830" r="3"/><circle cx="234" cy="830" r="3"/><circle cx="246" cy="830" r="3"/><circle cx="258" cy="830" r="3"/><circle cx="270" cy="830" r="3"/><circle cx="282" cy="830" r="3"/><circle cx="294" cy="830" r="3"/>
+  </g>
+  <text x="186" y="852" font-size="11" fill="#2A2A2A">放流 100尾 ／ ふ化率 ~95%</text>
+
+  <!-- 中間: 海で減耗 -->
+  <g fill="#2E6E8E" opacity="0.75">
+    <circle cx="600" cy="760" r="3"/><circle cx="614" cy="752" r="3"/><circle cx="628" cy="766" r="3"/><circle cx="642" cy="756" r="3"/><circle cx="656" cy="772" r="3"/><circle cx="600" cy="778" r="3"/><circle cx="624" cy="784" r="3"/><circle cx="648" cy="790" r="3"/><circle cx="668" cy="762" r="3"/><circle cx="612" cy="770" r="3"/>
+  </g>
+  <text x="600" y="812" font-size="11" fill="#2E6E8E">海洋で大量に減耗</text>
+  <text x="600" y="828" font-size="10" fill="#6B6B5F">（沿岸初期の減耗が最大）</text>
+  <line x1="470" y1="730" x2="700" y2="785" stroke="#2E6E8E" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowTeal)" opacity="0.6"/>
+
+  <!-- 右: 回帰 2-3尾 -->
+  <g fill="#A83232">
+    <circle cx="1000" cy="790" r="5"/><circle cx="1018" cy="800" r="5"/><circle cx="1010" cy="812" r="5"/>
+  </g>
+  <text x="1000" y="838" font-size="13" font-weight="600" fill="#A83232">回帰 2〜3尾</text>
+  <text x="1000" y="854" font-size="11" fill="#6B6B5F">放流→回帰 約2〜4%（北海道 ~5%・近年低下）</text>
+  <line x1="710" y1="788" x2="985" y2="800" stroke="#A83232" stroke-width="1.4" stroke-dasharray="4,3" marker-end="url(#arrowTeal)" opacity="0.7"/>
+
+  <!-- ===== フッタ：凡例・注記・出典 ===== -->
+  <line x1="40" y1="880" x2="1160" y2="880" stroke="#dad4c6" stroke-width="1"/>
+  <g font-size="10" fill="#6B6B5F">
+    <text x="40" y="900">凡例：<tspan fill="#6EB0C4">●</tspan> 幼稚魚　<tspan fill="#2E6E8E">●</tspan> 未成魚　<tspan fill="#A83232">●</tspan> 成魚　／　注：スピードは成魚のみ実測・深さ/水温は種全体の値・回帰率は地域差と年変動あり（近年低下）。</text>
+    <text x="40" y="918" font-style="italic">出典：水産研究・教育機構(FRA)／北海道立総研機構さけます試験場／水産庁・農水省／岩手県水産技術センター／群馬県水試／Tanaka et al.(遊泳ロガー実測)／FishBase。詳細は 02_research/life-stage-variables.md。</text>
+  </g>
+</svg>
