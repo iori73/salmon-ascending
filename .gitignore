@@ -2,6 +2,10 @@
 .DS_Store
 .claude/
 
+# === verification / temp screenshots (root) ===
+/salmon-act4-full.png
+/*-verify.png
+
 # === Node / Next.js (05_web) ===
 node_modules/
 .next/

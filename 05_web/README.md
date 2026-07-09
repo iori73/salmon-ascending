@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 05_web — サーモンは遡上する / Salmon Ascending（Webサイト）
 
-## Getting Started
+グラフィックエディトリアル「サーモンは遡上する」の公開サイト。
+Next.js 14（App Router）＋ TypeScript ＋ Tailwind CSS。
 
-First, run the development server:
+**🌐 公開**: https://salmon-ascending.vercel.app/
+
+## 開発 / Getting Started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- `npm run build` … 本番ビルド
+- `npm run fonts` … フォントのサブセット再生成（下記）
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ページ構成
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` … トップ（5幕の目次）
+- `/act/1`〜`/act/5` … 本編（第1〜5幕）
+- `/about` … プロジェクトについて
+- `/fieldwork` … フィールドワーク記録
 
-## Learn More
+図版は `components/` の自作 SVG コンポーネント群（河川断面・回遊マップ・遡上グラフ 等）。
 
-To learn more about Next.js, take a look at the following resources:
+## フォント（セルフホスト）
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**源ノ明朝（Noto Serif JP, SIL OFL）＋ EB Garamond** をセルフホストし、Google Fonts への
+外部依存はありません。`npm run fonts`（`scripts/generate-fonts.mjs`）が本文の使用文字だけを
+集めて woff2 サブセットを生成し、`public/fonts/` と `app/fonts.css` を書き出します。
+⚠️ 本文に新しい漢字を足したら `npm run fonts` を再実行（詳細は [`FONTS.md`](FONTS.md)）。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## デプロイ（Vercel）
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+このサイトはモノレポの `05_web/` 配下にあります。Vercel でインポートする際は
+**Root Directory を `05_web` に設定**してください（リポジトリ直下ではビルドできません）。
+Framework は Next.js が自動検出されます。
