@@ -1,0 +1,33 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/1/01.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "腹部に鮮やかなオレンジ色の卵黄嚢(ヨークサック)が明確に見える",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "腹部に大きく鮮やかなオレンジの卵黄嚢がある。"
+    },
+    {
+      "claim": "体側にパーマークや婚姻色など、稚魚以降に現れる模様は一切無い(無地の半透明〜灰色)",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "背に細かい点描の陰影はあるが、パーマークのような楕円斑紋ではない。"
+    },
+    {
+      "claim": "背びれ・尻びれが個別に分かれておらず、背〜尾にかけて連続した膜状のひれとして描かれている",
+      "severity": "advisory",
+      "verdict": "fail",
+      "evidence": "背びれ・脂びれ・尻びれ・腹びれが個別の稚魚的な形で描かれており、連続したfin foldにはなっていない。scaffold側(build_stage_vectors.py)がspec.yamlのfin present:falseを未反映のまま常に5鰭を描画するための既知の限界。"
+    },
+    {
+      "claim": "吻端は丸く、鉤鼻(kype)は無い",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "吻端は丸く、kypeなし。"
+    }
+  ],
+  "passed": true,
+  "note": "【事後訂正 2026-07-29】この判定はチェックリストに「体形が細長い幼生形であること」の項目が無かった時点のもの。実写真との比較でscaffoldが成魚シルエットを流用していたことが判明し、spec.yamlに`adult_body_shape_on_larva`(required)を追加した。この画像(01.png)は旧scaffold使用のため当該項目はfailに該当する。修正済みscaffoldによる正しいバージョンは`1/01-sketch-v1.png`(passed=true)を参照。本ファイルは監査履歴として残す。",
+  "superseded_by": "06_pipeline/attempts/chum-salmon/1/01-sketch-v1.png"
+}

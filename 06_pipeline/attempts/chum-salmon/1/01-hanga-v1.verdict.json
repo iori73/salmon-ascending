@@ -1,0 +1,15 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/1/01-hanga-v1.png",
+  "style": "hanga-v1",
+  "mode": "manual",
+  "verdicts": [
+    {"claim": "腹部に鮮やかなオレンジ色の卵黄嚢(ヨークサック)が明確に見える", "severity": "required", "verdict": "pass", "evidence": "腹部に鮮やかなオレンジの卵黄嚢がある。"},
+    {"claim": "体側にパーマークや婚姻色など、稚魚以降に現れる模様は一切無い", "severity": "required", "verdict": "pass", "evidence": "無地。"},
+    {"claim": "背びれ・尻びれが個別に分かれておらず、連続した膜状のひれとして描かれている", "severity": "advisory", "verdict": "fail", "evidence": "既知のscaffold限界(fin present:false未反映)により個別の鰭になっている。"},
+    {"claim": "吻端は丸く、鉤鼻(kype)は無い", "severity": "advisory", "verdict": "pass", "evidence": "丸い吻端。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "黒いストロークは無い。"},
+    {"claim": "グラデーションのないフラットな限定色塗りで構成されている", "severity": "required", "verdict": "fail", "evidence": "背〜腹、灰色〜オレンジの境界にソフトなグラデーションが見られ、完全にフラットではない。"}
+  ],
+  "passed": false,
+  "note": "生物学的checklistは全pass。スタイルの「no gradient」required項目が未達。scaffold自体が半透明レイヤーの重ね合わせ(back/belly countershade)でソフトなグラデーション的な見た目を持つため、それがGeminiに伝播した可能性が高い。"
+}

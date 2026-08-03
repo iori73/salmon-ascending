@@ -20,6 +20,7 @@ layers — consumption, ecology, and culture. A personal editorial/data-journali
 | `02_research/` | リサーチノート（生活史・変数・固有名など。※論文PDF/スキャンは非収録） |
 | `04_visual/` | 図版のソース（SVG・生成スクリプト。※重い生成ラスターは非収録） |
 | `05_web/` | 公開サイト本体（Next.js 14 / App Router） |
+| `06_pipeline/` | 科学的正確性を担保するAIイラスト生成パイプライン（spec.yaml→ベクター構造スキャフォールド→AI生成→検証ループ。詳細は`06_pipeline/SPEC_SCHEMA.md`。※重い生成ラスターは非収録） |
 | `article/` | note・Medium 用の記事下書き |
 | `references/` | 参照ソースの一元DB（Markdown メモ） |
 | `sns/` | SNS 投稿キャプション・書き出し画像 |

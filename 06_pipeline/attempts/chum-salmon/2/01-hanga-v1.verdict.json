@@ -1,0 +1,14 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/2/01-hanga-v1.png",
+  "style": "hanga-v1",
+  "mode": "manual",
+  "verdicts": [
+    {"claim": "体側に黒っぽい小判型(縦長楕円)の斑紋(パーマーク)が並んでいる", "severity": "required", "verdict": "pass", "evidence": "暗緑の縦長楕円パーマークが並んでいる。"},
+    {"claim": "パーマークの間隔・大きさが不規則で、機械的に均等な塗り楕円の繰り返しになっていない", "severity": "required", "verdict": "pass", "evidence": "頭側は間隔が詰まり、大きさにもばらつきがある。"},
+    {"claim": "背は黄緑〜オリーブ色、腹に向かって淡いクリーム緑に明るくなるカウンターシェーディングがある", "severity": "advisory", "verdict": "pass", "evidence": "オリーブ〜淡いクリーム色のグラデーションではなく段階的な塗り分けで表現。"},
+    {"claim": "鉤鼻(kype)や発達した歯など、成熟婚姻色の特徴が出ていない", "severity": "advisory", "verdict": "pass", "evidence": "丸い吻端。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "黒いストロークは無い(鰭の縁は同系色の二階調)。"},
+    {"claim": "グラデーションのないフラットな限定色塗りで構成されている", "severity": "required", "verdict": "pass", "evidence": "フラットな色面で構成されている。"}
+  ],
+  "passed": true
+}

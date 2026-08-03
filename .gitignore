@@ -23,6 +23,12 @@ __pycache__/
 *.pyc
 *.pyo
 
+# === 06_pipeline secrets ===
+06_pipeline/.env
+
+# === backup files left over from local troubleshooting ===
+*.bak
+
 # === logs / temp / work dirs ===
 *.log
 _scratch/
@@ -54,6 +60,11 @@ references/ai-conversations/*_files/
 04_visual/**/*.gif
 04_visual/**/*.mp4
 *.bmp
+
+# === Heavy raster assets under 06_pipeline (keep code / spec.yaml / style .md) ===
+06_pipeline/**/*.png
+06_pipeline/**/*.jpg
+06_pipeline/**/*.jpeg
 
 # === Archived / third-party texture remnants (unused) ===
 04_visual/**/_archive/

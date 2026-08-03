@@ -1,0 +1,25 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/4/01.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "背は鋼青〜青緑、腹は銀白のカウンターシェーディングが明瞭に付いている",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "背は青緑〜暗色、腹は白銀でカウンターシェーディングが明瞭。"
+    },
+    {
+      "claim": "体側に黒い斑点や縞模様は無く、無地の銀色",
+      "severity": "required",
+      "verdict": "fail",
+      "evidence": "背〜上側面に細かい黒点(スペックル)が多数散らばっており、実際の海洋期シロザケの無地の体表(他のサケ科と違い斑点がない)と一致しない。"
+    },
+    {
+      "claim": "鉤鼻(kype)や婚姻色の斑模様は出ていない",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "kype無し、婚姻色無し。"
+    }
+  ],
+  "passed": false
+}

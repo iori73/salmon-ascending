@@ -1,0 +1,13 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/1/03-hanga-v1.png",
+  "style": "hanga-v1",
+  "mode": "manual",
+  "verdicts": [
+    {"claim": "腹部に鮮やかなオレンジ色の卵黄嚢(ヨークサック)が明確に見える", "severity": "required", "verdict": "pass", "evidence": "単一のフラットなオレンジ形状。"},
+    {"claim": "体形は成魚のような紡錘形ではなく、細長く薄いリボン状の幼生体形になっている", "severity": "required", "verdict": "fail", "evidence": "この時点ではscaffold未修正のため成魚シルエットのまま。"},
+    {"claim": "グラデーションのないフラットな限定色塗りで構成されている", "severity": "required", "verdict": "pass", "evidence": "ジグザグの硬い境界で背/腹/卵黄嚢ともフラットになった。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "fail", "evidence": "薄い灰色の輪郭ストロークが鰭・体周囲に新たに出現(グラデーション修正の副作用)。"}
+  ],
+  "passed": false,
+  "note": "グラデーションは解消したが輪郭線が新たに発生。グラデーション/輪郭線を同時に解決できずscaffold修正(04)へ移行。"
+}

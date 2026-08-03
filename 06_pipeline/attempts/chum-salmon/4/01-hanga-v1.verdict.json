@@ -1,0 +1,13 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/4/01-hanga-v1.png",
+  "style": "hanga-v1",
+  "mode": "manual",
+  "verdicts": [
+    {"claim": "背は鋼青〜青緑、腹は銀白のカウンターシェーディングが明瞭に付いている", "severity": "required", "verdict": "pass", "evidence": "暗い鋼青の背から淡い銀白の腹へ、フラットな段階塗りでカウンターシェーディングが明瞭。"},
+    {"claim": "体側に黒い斑点や縞模様は無く、無地の銀色", "severity": "required", "verdict": "pass", "evidence": "丸い黒点は無く、背の境界はジグザグ形状の平面パターンのみ。"},
+    {"claim": "鉤鼻(kype)や婚姻色の斑模様は出ていない", "severity": "advisory", "verdict": "pass", "evidence": "無し。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "黒いストロークは無い。"},
+    {"claim": "グラデーションのないフラットな限定色塗りで構成されている", "severity": "required", "verdict": "pass", "evidence": "完全にフラットな色面のみで構成、このバッチの中で最も綺麗。"}
+  ],
+  "passed": true
+}

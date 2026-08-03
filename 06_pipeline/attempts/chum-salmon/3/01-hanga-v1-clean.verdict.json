@@ -1,0 +1,12 @@
+{
+  "image": "attempts/chum-salmon/_cleaned/3/01-hanga-v1-clean.png",
+  "source": "attempts/chum-salmon/3/01-hanga-v1.png + outline_remove.py post-processing",
+  "style": "hanga-v1",
+  "mode": "manual+objective_tool",
+  "verdicts": [
+    {"claim": "体側のパーマークが完全に消失し、均一な銀白色になっている", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "体表がグアニン結晶による鏡面的な銀色の輝きを持つ", "severity": "required", "verdict": "pass", "evidence": "淡い銀白のフラット塗りで表現。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "outline_check.pyでoutline_fraction=0.00001、has_outline=False。"}
+  ],
+  "passed": true
+}

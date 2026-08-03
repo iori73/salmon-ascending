@@ -1,0 +1,26 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/4/03.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "背は鋼青〜青緑、腹は銀白のカウンターシェーディングが明瞭に付いている",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "背は鋼青、腹は銀白でカウンターシェーディングが明瞭。"
+    },
+    {
+      "claim": "体側に黒い斑点や縞模様は無く、無地の銀色",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "01/02で見られた丸い黒点の散在が解消され、直線的なハッチング(質感表現)のみになった。斑点模様としては読めない。"
+    },
+    {
+      "claim": "鉤鼻(kype)や婚姻色の斑模様は出ていない",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "kype無し、婚姻色無し。"
+    }
+  ],
+  "passed": true,
+  "note": "01(黒点あり)→02(修正指示も黒点残存)→03(ハッチングへ変更・pass)。attempt 3で解決。"
+}

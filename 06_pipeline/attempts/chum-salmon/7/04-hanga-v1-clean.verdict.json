@@ -1,0 +1,14 @@
+{
+  "image": "attempts/chum-salmon/_cleaned/7/04-hanga-v1-clean.png",
+  "source": "attempts/chum-salmon/7/04-hanga-v1.png (--no-references再生成) + outline_remove.py post-processing",
+  "style": "hanga-v1",
+  "mode": "manual+objective_tool",
+  "verdicts": [
+    {"claim": "体表が白っぽく色褪せ、水カビ(綿状の白斑)のような質感が見える", "severity": "required", "verdict": "pass", "evidence": "白い雲状の斑が体表に散らばっている。"},
+    {"claim": "婚姻色のまだら模様が薄く退色した形で残っている", "severity": "required", "verdict": "pass", "evidence": "オリーブ〜暗緑の下地が白斑の間に残存。"},
+    {"claim": "生成物が破損/二重像(ゴースト)になっていない", "severity": "required", "verdict": "pass", "evidence": "01/02の二重像グリッチ・03の断片化グリッチを経て、--no-references(実写真conditioningを外す)で再生成した04は一体の破綻のない体形で生成できた。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "outline_check.pyでoutline_fraction=0.00003、has_outline=False。"}
+  ],
+  "passed": true,
+  "note": "01/02は目の二重像グリッチ、03は--no-references無しで再生成した結果ボディが断片化する重大グリッチ。--no-referencesオプション(実写真のhocchare/腐敗した実写真conditioningを外す)が有効だった可能性が高い — 実写真の複雑な質感がフラットスタイル生成を混乱させていたと推測される。"
+}

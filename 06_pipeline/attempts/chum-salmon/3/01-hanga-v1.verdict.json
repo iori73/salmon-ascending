@@ -1,0 +1,13 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/3/01-hanga-v1.png",
+  "style": "hanga-v1",
+  "mode": "manual",
+  "verdicts": [
+    {"claim": "体側のパーマークが完全に消失し、均一な銀白色になっている", "severity": "required", "verdict": "pass", "evidence": "パーマーク無し、体側は淡い銀白。"},
+    {"claim": "体表がグアニン結晶による鏡面的な銀色の輝きを持つ", "severity": "required", "verdict": "pass", "evidence": "スタイル上ハイライトは付けられないが、淡い銀白の平面色で表現されている。"},
+    {"claim": "鉤鼻(kype)や婚姻色の斑模様は出ていない", "severity": "advisory", "verdict": "pass", "evidence": "無し。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "黒いストロークは無い。"},
+    {"claim": "グラデーションのないフラットな限定色塗りで構成されている", "severity": "required", "verdict": "pass", "evidence": "フラットな塗り分け。"}
+  ],
+  "passed": true
+}

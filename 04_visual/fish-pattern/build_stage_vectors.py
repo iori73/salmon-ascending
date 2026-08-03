@@ -22,7 +22,7 @@ sys.path.insert(0, HERE)
 import fish_geom as G   # _TOP/_BOT プロファイル・eye 位置を共有
 from _paths import out as _OUT
 
-SLUG = {2: "parr", 3: "smolt", 4: "ocean", 5: "coastal", 6: "river", 7: "postspawn"}
+SLUG = {1: "alevin", 2: "parr", 3: "smolt", 4: "ocean", 5: "coastal", 6: "river", 7: "postspawn"}
 
 # ---- キャンバス・体格 ----
 W, H = 360.0, 140.0
@@ -76,16 +76,17 @@ def stage_palette(n):
         bar = hx(c["bar_dark"]); bar2 = darken(hx(c["bar_dark"]), 0.8)
     else:
         bar = darken(flank, 0.62); bar2 = darken(flank, 0.5)
-    return dict(flank=flank, back=back, belly=belly, bar=bar, bar2=bar2)
+    yolk = hx(c["yolk"]) if c.get("yolk") else None
+    return dict(flank=flank, back=back, belly=belly, bar=bar, bar2=bar2, yolk=yolk)
 
 
 # ---- 幾何ヘルパ ----
-def htop(t):
-    return float(G._interp(G._TOP, t))
+def htop(t, prof=None):
+    return float(G._interp(prof if prof is not None else G._TOP, t))
 
 
-def hbot(t):
-    return float(G._interp(G._BOT, t))
+def hbot(t, prof=None):
+    return float(G._interp(prof if prof is not None else G._BOT, t))
 
 
 def PX(t, sign_h):
@@ -111,9 +112,11 @@ def catmull(points, closed=False):
     return " ".join(segs)
 
 
-def body_path():
-    top = [PX(t, h) for (t, h) in G._TOP]              # 背側(上,負y側)
-    bot = [PX(t, -h) for (t, h) in G._BOT]             # 腹側(下)
+def body_path(top_prof=None, bot_prof=None):
+    top_prof = top_prof if top_prof is not None else G._TOP
+    bot_prof = bot_prof if bot_prof is not None else G._BOT
+    top = [PX(t, h) for (t, h) in top_prof]              # 背側(上,負y側)
+    bot = [PX(t, -h) for (t, h) in bot_prof]             # 腹側(下)
     d = "M %.2f %.2f " % top[0]
     d += catmull(top)
     d += " L %.2f %.2f " % bot[-1]                      # 尾柄で上→下
@@ -122,10 +125,11 @@ def body_path():
     return d
 
 
-def back_band_path(depth=0.40):
+def back_band_path(depth=0.40, top_prof=None):
     """背の countershade 帯: 背プロファイル → 内側(半高 depth)で戻る。"""
-    top = [PX(t, h) for (t, h) in G._TOP]
-    inner = [PX(t, h * (1 - depth)) for (t, h) in G._TOP]   # 内側= 背半高の depth ぶん下げ
+    top_prof = top_prof if top_prof is not None else G._TOP
+    top = [PX(t, h) for (t, h) in top_prof]
+    inner = [PX(t, h * (1 - depth)) for (t, h) in top_prof]   # 内側= 背半高の depth ぶん下げ
     d = "M %.2f %.2f " % top[0]
     d += catmull(top)
     d += " L %.2f %.2f " % inner[-1]
@@ -134,13 +138,76 @@ def back_band_path(depth=0.40):
     return d
 
 
-def belly_band_path(depth=0.45):
-    bot = [PX(t, -h) for (t, h) in G._BOT]
-    inner = [PX(t, -h * (1 - depth)) for (t, h) in G._BOT]
+def belly_band_path(depth=0.45, bot_prof=None):
+    bot_prof = bot_prof if bot_prof is not None else G._BOT
+    bot = [PX(t, -h) for (t, h) in bot_prof]
+    inner = [PX(t, -h * (1 - depth)) for (t, h) in bot_prof]
     d = "M %.2f %.2f " % bot[0]
     d += catmull(bot)
     d += " L %.2f %.2f " % inner[-1]
     d += catmull(list(reversed(inner)))
+    d += " Z"
+    return d
+
+
+def fin_fold_path(t0=0.55, t1=0.94, fold_h_max=0.034):
+    """仔魚の連続した膜状ひれ(fin fold): 体プロファイルの少し外側を一周する薄い帯。
+    個別の背びれ/尻びれの代わりに、背側外縁(t0→t1)→腹側外縁(t1→t0)をたどるリング状の輪郭にする。
+    高さはt0/t1で0まで滑らかにテーパーし、中央付近で最大(実際の連続fin foldの盛り上がりを模す)。
+    body_path()と同じ構成(t1端は直線で閉じる)にして、閉ループのcatmullシーム歪みを避ける。"""
+    ts = np.linspace(t0, t1, 24)
+
+    def taper(t):
+        frac = (t - t0) / (t1 - t0)
+        return fold_h_max * np.sin(np.pi * frac) ** 0.6
+
+    top = [PX(t, htop(t, G._TOP_ALEVIN) + taper(t)) for t in ts]
+    bot = [PX(t, -(hbot(t, G._BOT_ALEVIN) + taper(t))) for t in ts]
+    d = "M %.2f %.2f " % top[0]
+    d += catmull(top)
+    d += " L %.2f %.2f " % bot[-1]
+    d += catmull(list(reversed(bot)))
+    d += " Z"
+    return d
+
+
+# 卵黄嚢の位置・大きさ(体の輪郭そのものに組み込む膨らみとして共有するパラメータ)
+YOLK_CENTER_T = 0.32
+YOLK_HALF_WIDTH = 0.17
+YOLK_HEIGHT = 0.135
+
+
+def _yolk_bump(t_array, center=YOLK_CENTER_T, half_width=YOLK_HALF_WIDTH, height=YOLK_HEIGHT):
+    """中心からhalf_width以内で滑らかに0→height→0と盛り上がるコサイン型の膨らみ。"""
+    d = np.abs(np.asarray(t_array, dtype=float) - center)
+    bump = np.zeros_like(d)
+    within = d < half_width
+    bump[within] = height * np.cos((d[within] / half_width) * (np.pi / 2)) ** 2
+    return bump
+
+
+def alevin_bot_profile_with_yolk(n_pts=60):
+    """腹側プロファイル(仔魚)に卵黄嚢の膨らみを足した、密にサンプリングした点列。
+    体の輪郭(body_path/belly_band_path)にこれを渡すことで、卵黄嚢を「別パーツの楕円」
+    ではなく「体の輪郭そのものが膨らんだ一続きの形」として描ける(体と分離して見える問題の対策)。"""
+    ts = np.linspace(0.0, 0.94, n_pts)
+    base = np.array([hbot(t, G._BOT_ALEVIN) for t in ts])
+    bump = _yolk_bump(ts)
+    return list(zip(ts, base + bump))
+
+
+def yolk_fill_path():
+    """卵黄嚢の色だけを塗る内部パス。輪郭線には一切触れず(体の輪郭は既に膨らみ込みで
+    一体化しているため)、通常の腹ライン〜膨らんだ腹ラインの間の「膨らんだ分」だけを塗る。"""
+    ts = np.linspace(YOLK_CENTER_T - YOLK_HALF_WIDTH * 0.9, YOLK_CENTER_T + YOLK_HALF_WIDTH * 0.9, 28)
+    base = np.array([hbot(t, G._BOT_ALEVIN) for t in ts])
+    bump = _yolk_bump(ts)
+    inner = [PX(t, -h) for t, h in zip(ts, base)]          # 通常の腹ライン(内側)
+    outer = [PX(t, -h) for t, h in zip(ts, base + bump)]   # 膨らんだ腹ライン(外側=体の輪郭と一致)
+    d = "M %.2f %.2f " % inner[0]
+    d += catmull(inner)
+    d += " L %.2f %.2f " % outer[-1]
+    d += catmull(list(reversed(outer)))
     d += " Z"
     return d
 
@@ -174,15 +241,15 @@ FIN_PELVIC = [(0.48, -0.090), (0.515, -0.165), (0.55, -0.085)]
 FIN_PECT = [(0.205, -0.058), (0.245, -0.140), (0.295, -0.165), (0.30, -0.050)]
 
 
-def eye_xy():
+def eye_xy(prof=None):
     t = 0.062
-    return PX(t, 0.33 * htop(t))
+    return PX(t, 0.33 * htop(t, prof))
 
 
-def gill_path():
+def gill_path(top_prof=None, bot_prof=None):
     t = 0.175
-    a = PX(t, htop(t) * 0.92)
-    b = PX(t + 0.02, -hbot(t) * 0.9)
+    a = PX(t, htop(t, top_prof) * 0.92)
+    b = PX(t + 0.02, -hbot(t, bot_prof) * 0.9)
     mid = PX(t - 0.03, 0.0)
     return "M %.2f %.2f Q %.2f %.2f %.2f %.2f" % (a[0], a[1], mid[0], mid[1], b[0], b[1])
 
@@ -228,8 +295,10 @@ def stage_spec(n):
     rng = np.random.default_rng(20260621 + n)
     pal = stage_palette(n)
     spec = dict(pal=pal, bars=[], bar_color=pal["bar"], bar_op=0.0,
-                back_op=0.55, belly_op=0.0, sheen=0.0, wear=0.0, kype=(n in (6, 7)))
-    if n == 2:      # 稚魚 parr: 等間隔の縦バー約10本
+                back_op=0.55, belly_op=0.0, sheen=0.0, wear=0.0, kype=(n in (6, 7)), yolk=(n == 1))
+    if n == 1:      # 仔魚 alevin: 半透明の体＋腹に卵黄嚢、模様なし
+        spec["back_op"] = 0.25; spec["belly_op"] = 0.15; spec["sheen"] = 0.15
+    elif n == 2:      # 稚魚 parr: 等間隔の縦バー約10本
         tcs = list(np.linspace(0.17, 0.80, 10))
         spec["bars"] = bar_shapes(tcs, 0.028, 0.55, 0.42, 0.0, rng)
         spec["bar_op"] = 0.85; spec["back_op"] = 0.5
@@ -269,6 +338,42 @@ def render_stage_svg(n, standalone=True):
     rng = np.random.default_rng(20260621 + n)
     g = []
     g.append('<g data-name="stage-%d-%s">' % (n, SLUG[n]))
+
+    if n == 1:
+        # 仔魚(alevin): 成魚シルエットは使わず、薄いリボン状の幼生体形+連続fin foldで描く。
+        # 卵黄嚢は体の輪郭(bot_prof)そのものに膨らみとして組み込み、別パーツの楕円にはしない
+        # (体と分離して見える問題への対策。yolk_fill_pathは色だけを塗る内部パスで輪郭には触れない)。
+        top_prof = G._TOP_ALEVIN
+        bot_prof = alevin_bot_profile_with_yolk()
+        g.append('  <path data-name="fin-fold" d="%s" fill="%s" fill-opacity="0.85"/>' % (
+            fin_fold_path(), to_hex(darken(pal["flank"], 0.85))))
+        g.append('  <path data-name="body" d="%s" fill="%s"/>' % (
+            body_path(top_prof, bot_prof), to_hex(pal["flank"])))
+        g.append('  <path data-name="back" d="%s" fill="%s" fill-opacity="%.2f"/>' % (
+            back_band_path(0.42, top_prof), to_hex(pal["back"]), sp["back_op"]))
+        if sp["belly_op"] > 0:
+            g.append('  <path data-name="belly" d="%s" fill="%s" fill-opacity="%.2f"/>' % (
+                belly_band_path(0.5, bot_prof), to_hex(pal["belly"]), sp["belly_op"]))
+        if pal.get("yolk") is not None:
+            g.append('  <path data-name="yolk-sac" d="%s" fill="%s" fill-opacity="0.92"/>' % (
+                yolk_fill_path(), to_hex(pal["yolk"])))
+        # 胸びれのみ(対になって早期発達。他の鰭は未分化のためfin foldに含まれる)
+        finfill = to_hex(darken(pal["back"], 1.05))
+        pect_small = [(t, h * 0.6) for (t, h) in FIN_PECT]
+        g.append('  <path data-name="fin-pectoral" d="%s" fill="%s" fill-opacity="0.9"/>' % (
+            fin_path(pect_small, True), finfill))
+        g.append('  <path data-name="gill" d="%s" fill="none" stroke="%s" stroke-opacity="0.5" stroke-width="1"/>' % (
+            gill_path(top_prof, bot_prof), to_hex(darken(pal["back"], 0.8))))
+        ex, ey = eye_xy(top_prof)
+        g.append('  <circle data-name="eye" cx="%.2f" cy="%.2f" r="%.2f" fill="#F2EEE6"/>' % (ex, ey, 0.024 * L))
+        g.append('  <circle data-name="pupil" cx="%.2f" cy="%.2f" r="%.2f" fill="#1E1E22"/>' % (ex, ey, 0.015 * L))
+        g.append('</g>')
+        inner = "\n".join(g)
+        if standalone:
+            return ('<svg xmlns="http://www.w3.org/2000/svg" width="%g" height="%g" viewBox="0 0 %g %g">\n%s\n</svg>'
+                    % (W, H, W, H, inner))
+        return inner
+
     # tail (背後)
     g.append('  <path data-name="tail" d="%s" fill="%s"/>' % (tail_path(), to_hex(darken(pal["back"], 0.95))))
     # body

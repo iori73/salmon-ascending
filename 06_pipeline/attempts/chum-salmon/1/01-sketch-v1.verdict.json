@@ -1,0 +1,14 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/1/01-sketch-v1.png",
+  "style": "sketch-v1",
+  "mode": "manual",
+  "verdicts": [
+    {"claim": "腹部に鮮やかなオレンジ色の卵黄嚢(ヨークサック)が明確に見える", "severity": "required", "verdict": "pass", "evidence": "オレンジ〜赤の卵黄嚢が体外に大きく張り出している。"},
+    {"claim": "体側にパーマークや婚姻色など、稚魚以降に現れる模様は一切無い", "severity": "required", "verdict": "pass", "evidence": "無地。"},
+    {"claim": "背びれ・尻びれが個別に分かれておらず、連続した膜状のひれとして描かれている", "severity": "advisory", "verdict": "fail", "evidence": "sketch-v1のインク線画スタイル上、各鰭が個別に輪郭線で描かれている(スタイル起因、hanga-v1では解消済み)。"},
+    {"claim": "吻端は丸く、鉤鼻(kype)は無い", "severity": "advisory", "verdict": "pass", "evidence": "丸い吻端。"},
+    {"claim": "線がラフな手描き(マーカー/色鉛筆)に見え、写実的なレンダリングになっていない", "severity": "required", "verdict": "pass", "evidence": "鉛筆調の手描き。"}
+  ],
+  "passed": true,
+  "note": "体形は修正済みscaffold(細長いリボン状+外付け卵黄嚢)を反映し、旧版より実写真に近い。"
+}

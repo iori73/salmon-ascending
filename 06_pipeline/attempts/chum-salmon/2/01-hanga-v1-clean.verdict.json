@@ -1,0 +1,12 @@
+{
+  "image": "attempts/chum-salmon/_cleaned/2/01-hanga-v1-clean.png",
+  "source": "attempts/chum-salmon/2/01-hanga-v1.png + outline_remove.py post-processing",
+  "style": "hanga-v1",
+  "mode": "manual+objective_tool",
+  "verdicts": [
+    {"claim": "体側に黒っぽい小判型(縦長楕円)の斑紋(パーマーク)が並んでいる", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "パーマークの間隔・大きさが不規則", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "outline_check.pyでoutline_fraction=0.00001、has_outline=False。"}
+  ],
+  "passed": true
+}

@@ -1,0 +1,14 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/5/02-hanga-v1.png",
+  "style": "hanga-v1",
+  "mode": "manual",
+  "verdicts": [
+    {"claim": "吻端はまだ丸く、鉤鼻(kype)は発達していない", "severity": "required", "verdict": "pass", "evidence": "丸い吻端。"},
+    {"claim": "尾柄付近に紫色のまだら模様が兆候として現れている", "severity": "required", "verdict": "pass", "evidence": "尾柄付近に紫の斑点クラスターが不規則な形で見られる(01より粒立ちが良い)。"},
+    {"claim": "側面にまだ銀色が部分的に残っており、完全な婚姻色には至っていない", "severity": "advisory", "verdict": "pass", "evidence": "オリーブ〜灰色で完全なcalicoには至っていない。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "黒いストロークは無い。"},
+    {"claim": "グラデーションのないフラットな限定色塗りで構成されている", "severity": "required", "verdict": "pass", "evidence": "背(オリーブ)と腹(白灰)の境界がジグザグの硬いエッジになり、01で見られたソフトグラデーション・ドロップシャドウが解消された。"}
+  ],
+  "passed": true,
+  "note": "01-hanga-v1(グラデーション・ドロップシャドウでrequired違反)の修正版として再生成。会話内では判定済みだったが、verdictファイルの書き出しを失念していたため事後補完(2026-07-29のスタイル監査時に発覚)。"
+}

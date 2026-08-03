@@ -1,0 +1,31 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/7/01.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "体表が白っぽく色褪せ、水カビ(綿状の白斑)のような質感が見える",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "体表に綿状・雲状の白い斑が広範囲に見られ、水カビ様の質感がよく表現されている。"
+    },
+    {
+      "claim": "婚姻色のまだら模様が薄く退色した形で残っている(完全に消えてはいない)",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "白斑の下地にオリーブ黄〜緑のまだら模様が薄く残存している。"
+    },
+    {
+      "claim": "鰭や体表がボロボロに傷んだ様子で描かれている(健康な個体のような艶やかさはない)",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "鰭の縁が綿状・ギザギザに傷んだ様子で描かれている。"
+    },
+    {
+      "claim": "オスの場合、婚姻色期からの鉤鼻(kype)の形状は保持されている",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "鉤状の下顎と歯が明瞭に保持されている。"
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,14 @@
+{
+  "image": "attempts/chum-salmon/_cleaned/6/02-hanga-v1-clean.png",
+  "source": "attempts/chum-salmon/6/02-hanga-v1.png + outline_remove.py post-processing",
+  "style": "hanga-v1",
+  "mode": "manual+objective_tool",
+  "verdicts": [
+    {"claim": "オスの吻端に鉤状に曲がったkype(鉤鼻)が明確に見える", "severity": "required", "verdict": "pass", "evidence": "視認確認、歯も見える(後処理でやや粗くなったが判読可能)。"},
+    {"claim": "側面の模様は不規則な形・大きさの赤・紫・黒の斑(まだら/calico)である", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "均一な赤い楕円ドット列になっていない", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "outline_check.pyでoutline_fraction=0.00002、has_outline=False。この画像は元々ユーザーに輪郭線ありと訂正された経緯があり、後処理適用後に再度客観ツールで確認した。"}
+  ],
+  "passed": true,
+  "note": "style/anchor-hanga-v1.pngとして採用。SE_SIZE=7での後処理により歯の判読性を維持しつつ輪郭線を除去できた(SE_SIZE=11では歯が潰れた)。"
+}

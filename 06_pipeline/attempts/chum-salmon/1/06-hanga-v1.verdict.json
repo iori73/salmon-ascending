@@ -1,0 +1,14 @@
+{
+  "image": "1/06-hanga-v1.png",
+  "style": "hanga-v1",
+  "mode": "manual+objective_tool",
+  "verdicts": [
+    {"claim": "腹部に鮮やかなオレンジ色の卵黄嚢(ヨークサック)が明確に見える", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "体形は成魚のような紡錘形ではなく、細長く薄いリボン状の幼生体形になっている", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "卵黄嚢は体の輪郭と融合した連続的な膨らみとして描かれており、体から浮いた/分離した別パーツに見えない", "severity": "required", "verdict": "pass", "evidence": "scaffold側でbot_profile自体に卵黄嚢の膨らみを組み込んだ(yolk_fill_pathは色のみを塗る内部パスで輪郭には触れない)ことで、体と卵黄嚢が一続きのシルエットとして生成された。"},
+    {"claim": "体側にパーマークや婚姻色など、稚魚以降に現れる模様は一切無い", "severity": "required", "verdict": "pass", "evidence": "無地。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "outline_check.pyでoutline_fraction=0.00002、has_outline=False。"}
+  ],
+  "passed": true,
+  "note": "①(仔魚)の最後の未解決項目(卵黄嚢の分離問題)を解決。build_stage_vectors.pyのalevin_bot_profile_with_yolk()により体の輪郭そのものに卵黄嚢の膨らみを組み込んだことが根本解決になった(プロンプト指示のみでは3回とも失敗していた)。これでシロザケ7段階×2スタイル全てが両requiredチェックリストをpass。"
+}

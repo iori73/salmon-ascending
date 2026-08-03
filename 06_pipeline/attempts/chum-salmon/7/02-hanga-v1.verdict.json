@@ -1,0 +1,20 @@
+{
+  "image": "7/02-hanga-v1.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "体表が白っぽく色褪せ、水カビ(綿状の白斑)のような質感が見える",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "01と同じボディ、白斑質感あり"
+    },
+    {
+      "claim": "目の黒い虹彩が不自然に目立っていない",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "01にあった黒い目を周囲の頭部色で塗りつぶして除去(手動ピクセル編集)。既存の白い斑質感と馴染んでいる"
+    }
+  ],
+  "passed": true,
+  "human_notes": "01から目を手動除去(Gemini再生成ではなくPillowでの直接編集)。ユーザー確認予定。ゴースト風の二重像自体は残るが、ユーザー評価により採用レベルと判断。"
+}

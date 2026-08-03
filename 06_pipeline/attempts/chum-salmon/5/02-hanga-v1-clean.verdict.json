@@ -1,0 +1,13 @@
+{
+  "image": "attempts/chum-salmon/_cleaned/5/02-hanga-v1-clean.png",
+  "source": "attempts/chum-salmon/5/02-hanga-v1.png + outline_remove.py post-processing",
+  "style": "hanga-v1",
+  "mode": "manual+objective_tool",
+  "verdicts": [
+    {"claim": "吻端はまだ丸く、鉤鼻(kype)は発達していない", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "尾柄付近に紫色のまだら模様が兆候として現れている", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "グラデーションのないフラットな限定色塗りで構成されている", "severity": "required", "verdict": "pass", "evidence": "02で修正済み(01のグラデーション/ドロップシャドウは解消)。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "outline_check.pyでoutline_fraction=0.00003、has_outline=False。"}
+  ],
+  "passed": true
+}

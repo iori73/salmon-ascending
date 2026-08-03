@@ -1,0 +1,25 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/3/01.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "体側のパーマークが完全に消失し、均一な銀白色になっている",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "楕円状のパーマークは無く、背に細かい点描のみ。体側は銀白基調。"
+    },
+    {
+      "claim": "体表がグアニン結晶による鏡面的な銀色の輝きを持つ(マットなグレー一色ではない)",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "側面に明瞭な白いハイライト帯があり、鏡面反射のような銀の輝きを表現している。"
+    },
+    {
+      "claim": "鉤鼻(kype)や婚姻色の斑模様は出ていない",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "kype無し、婚姻色の斑無し。"
+    }
+  ],
+  "passed": true
+}

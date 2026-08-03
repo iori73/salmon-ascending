@@ -1,0 +1,505 @@
+# シロザケ(chum salmon) 生活史 morphology spec
+# スキーマ: 06_pipeline/SPEC_SCHEMA.md
+# ソース: 02_research/life-stage-descriptions.md, 04_visual/lifecycle-stages/color-palette.md,
+#         04_visual/fish-pattern/calibration.json, references/
+# 範囲: 7段階すべて記述(②⑥はマイルストーンで検証済み、①③④⑤⑦は同スキーマで追加)
+
+subject: chum-salmon
+subject_name:
+  ja: シロザケ
+  en: Chum salmon (Oncorhynchus keta)
+
+stages:
+  - stage_id: 1
+    stage_name: {ja: 仔魚(ヨークサック期), en: Alevin (yolk-sac stage)}
+
+    body_shape:
+      descriptor: >
+        全長約2.5cm。体は半透明で細長く、腹部に大きなオレンジ色の卵黄嚢(ヨークサック)を抱える。
+        ひれは未分化で、背〜尾〜尻にかけて連続した膜状のひれ(fin fold)として存在し、
+        個別の背びれ・尻びれにはまだ分かれていない。胸びれのみ対になって発達している。
+      confidence: ○
+      source_ids: [02_research/life-stage-descriptions.md#1]
+
+    mouth_jaw:
+      kype_present: false
+      teeth_developed: false
+      confidence: ◎
+      source_ids: [02_research/life-stage-descriptions.md#1]
+
+    eye:
+      descriptor: 体に対し相対的に大きい暗色の目。
+      confidence: ○
+
+    respiratory_structure:
+      gill_cover_visible: true
+      confidence: △
+
+    appendages:
+      fins:
+        - {name: dorsal, present: false}
+        - {name: adipose, present: false}
+        - {name: anal, present: false}
+        - {name: pelvic, present: false}
+        - {name: pectoral, present: true}
+
+    color_regions:
+      - region: dorsal
+        pattern_type: uniform
+        hex: ["#7E8780"]
+        confidence: ○
+        source_ids: [04_visual/fish-pattern/calibration.json#1]
+      - region: flank
+        pattern_type: uniform
+        hex: ["#BCC0BC"]
+        confidence: ○
+        source_ids: [04_visual/fish-pattern/calibration.json#1]
+      - region: belly
+        pattern_type: uniform
+        hex: ["#D6D4CC"]
+        confidence: ○
+      - region: yolk_sac
+        pattern_type: uniform
+        hex: ["#EE7A38"]
+        confidence: ◎
+        source_ids: [references/images/img-alevin-newborn.md, references/images/img-alevin-eggs.md]
+
+    diagnostic_checklist:
+      - claim: "体形は成魚のような紡錘形ではなく、細長く薄いリボン状の幼生体形になっている"
+        expected: true
+        severity: required
+        guards_against: adult_body_shape_on_larva
+      - claim: "腹部に鮮やかなオレンジ色の卵黄嚢(ヨークサック)が明確に見える"
+        expected: true
+        severity: required
+        guards_against: no_yolk_sac
+      - claim: "卵黄嚢は体の輪郭と融合した連続的な膨らみとして描かれており、体から浮いた/分離した別パーツに見えない"
+        expected: true
+        severity: required
+        guards_against: yolk_sac_appears_detached
+      - claim: "体側にパーマークや婚姻色など、稚魚以降に現れる模様は一切無い(無地の半透明〜灰色)"
+        expected: true
+        severity: required
+        guards_against: premature_pattern
+      - claim: "背びれ・尻びれが個別に分かれておらず、背〜尾にかけて連続した膜状のひれとして描かれている"
+        expected: true
+        severity: advisory
+        guards_against: premature_fins
+      - claim: "吻端は丸く、鉤鼻(kype)は無い"
+        expected: true
+        severity: advisory
+        guards_against: premature_kype
+
+    reference_photos:
+      - references/images/img-alevin-newborn.md
+      - references/images/img-alevin-eggs.md
+
+  - stage_id: 2
+    stage_name: {ja: 稚魚(パーマーク), en: Parr / Fry}
+
+    body_shape:
+      descriptor: >
+        全長約5cm。稚魚体型で頭部に対し体高が低く、吻端は丸い(kypeなし)。
+      confidence: ○
+      source_ids: [02_research/life-stage-descriptions.md#2]
+
+    mouth_jaw:
+      kype_present: false
+      teeth_developed: false
+      confidence: ◎
+      source_ids: [02_research/life-stage-descriptions.md#2]
+
+    eye:
+      descriptor: 体に対し相対的に大きい幼魚の目。虹彩は暗色、白目部分なし。
+      confidence: ○
+
+    respiratory_structure:
+      gill_cover_visible: true
+      confidence: ○
+
+    appendages:
+      fins:
+        - {name: dorsal, present: true}
+        - {name: adipose, present: true}
+        - {name: anal, present: true}
+        - {name: pelvic, present: true}
+        - {name: pectoral, present: true}
+
+    color_regions:
+      - region: dorsal
+        pattern_type: uniform
+        hex: ["#3D4820", "#4E5A28"]
+        confidence: ◎
+        source_ids: [references/images/img-fry-fingerling.md]
+      - region: flank
+        pattern_type: parr_bars
+        hex: ["#7A8840", "#B8C890", "#252E14"]
+        confidence: ◎
+        source_ids: [references/images/img-fry-fingerling.md]
+      - region: belly
+        pattern_type: uniform
+        hex: ["#CCDAAA", "#E5E8D8"]
+        confidence: ○
+
+    diagnostic_checklist:
+      - claim: "体側に黒っぽい小判型(縦長楕円)の斑紋(パーマーク)が並んでいる"
+        expected: true
+        severity: required
+        guards_against: no_parr_marks
+      - claim: "パーマークの間隔・大きさが不規則で、機械的に均等な塗り楕円の繰り返しになっていない"
+        expected: true
+        severity: required
+        guards_against: uniform_parr_mark
+      - claim: "背は黄緑〜オリーブ色、腹に向かって淡いクリーム緑に明るくなるカウンターシェーディングがある"
+        expected: true
+        severity: advisory
+        guards_against: flat_single_color
+      - claim: "鉤鼻(kype)や発達した歯など、成熟婚姻色の特徴が出ていない"
+        expected: true
+        severity: advisory
+        guards_against: premature_kype
+
+    reference_photos:
+      - references/images/img-fry-fingerling.md
+
+  - stage_id: 3
+    stage_name: {ja: スモルト(銀化), en: Smolt (silvering)}
+
+    body_shape:
+      descriptor: >
+        全長約8〜10cm。稚魚より体高が低く伸びた体型。海水適応(スモルト化)に向けて銀化する段階。
+      confidence: ○
+      source_ids: [02_research/life-stage-descriptions.md#3]
+
+    mouth_jaw:
+      kype_present: false
+      teeth_developed: false
+      confidence: ◎
+
+    eye:
+      descriptor: 虹彩は暗色のまま。
+      confidence: ○
+
+    respiratory_structure:
+      gill_cover_visible: true
+      confidence: ○
+
+    appendages:
+      fins:
+        - {name: dorsal, present: true}
+        - {name: adipose, present: true}
+        - {name: anal, present: true}
+        - {name: pelvic, present: true}
+        - {name: pectoral, present: true}
+
+    color_regions:
+      - region: dorsal
+        pattern_type: uniform
+        hex: ["#1E3A40", "#2A4855"]
+        confidence: ◎
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#3]
+      - region: flank
+        pattern_type: uniform
+        hex: ["#6898B0", "#C0D0D8"]
+        confidence: ◎
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#3, references/images/img-smolt-oceanarium.md]
+      - region: belly
+        pattern_type: uniform
+        hex: ["#D8E8F0", "#F0F4F8"]
+        confidence: ◎
+
+    diagnostic_checklist:
+      - claim: "体側のパーマークが完全に消失し、均一な銀白色になっている"
+        expected: true
+        severity: required
+        guards_against: retained_parr_marks
+      - claim: "体表がグアニン結晶による鏡面的な銀色の輝きを持つ(マットなグレー一色ではない)"
+        expected: true
+        severity: required
+        guards_against: dull_silvering
+      - claim: "鉤鼻(kype)や婚姻色の斑模様は出ていない"
+        expected: true
+        severity: advisory
+        guards_against: premature_kype
+
+    reference_photos:
+      - references/images/img-smolt-oceanarium.md
+
+  - stage_id: 4
+    stage_name: {ja: 海洋回遊, en: Ocean migration}
+
+    body_shape:
+      descriptor: >
+        成魚体型。外洋回遊魚として体高がしっかりした紡錘形。
+      confidence: ○
+      source_ids: [02_research/life-stage-descriptions.md#4]
+
+    mouth_jaw:
+      kype_present: false
+      teeth_developed: false
+      confidence: ◎
+
+    eye:
+      descriptor: 虹彩は暗色のまま。
+      confidence: ○
+
+    respiratory_structure:
+      gill_cover_visible: true
+      confidence: ○
+
+    appendages:
+      fins:
+        - {name: dorsal, present: true}
+        - {name: adipose, present: true}
+        - {name: anal, present: true}
+        - {name: pelvic, present: true}
+        - {name: pectoral, present: true}
+
+    color_regions:
+      - region: dorsal
+        pattern_type: uniform
+        hex: ["#32383D", "#3A5060"]
+        confidence: ◎
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#4]
+      - region: flank
+        pattern_type: uniform
+        hex: ["#61696D", "#9AAABB"]
+        confidence: ◎
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#4, references/images/img-ocean-illustration-noaa.md]
+      - region: belly
+        pattern_type: uniform
+        hex: ["#C8D4D8", "#DCE8EC"]
+        confidence: ◎
+
+    diagnostic_checklist:
+      - claim: "背は鋼青〜青緑、腹は銀白のカウンターシェーディングが明瞭に付いている"
+        expected: true
+        severity: required
+        guards_against: flat_single_color
+      - claim: "体側に黒い斑点や縞模様は無く、無地の銀色"
+        expected: true
+        severity: required
+        guards_against: spurious_spots
+      - claim: "鉤鼻(kype)や婚姻色の斑模様は出ていない"
+        expected: true
+        severity: advisory
+        guards_against: premature_kype
+
+    reference_photos:
+      - references/images/img-ocean-illustration-noaa.md
+      - references/images/img-ocean-silver.md
+
+  - stage_id: 5
+    stage_name: {ja: 沿岸回帰(入河前), en: Coastal return (pre-run)}
+
+    body_shape:
+      descriptor: >
+        成魚体型。母川回帰のため沿岸へ戻った段階。吻端はまだ丸く、鉤鼻(kype)は未発達。
+      confidence: ○
+      source_ids: [02_research/life-stage-descriptions.md#5]
+
+    mouth_jaw:
+      kype_present: false
+      teeth_developed: false
+      confidence: ◎
+      source_ids: [02_research/life-stage-descriptions.md#5]
+
+    eye:
+      descriptor: 虹彩は暗色のまま。
+      confidence: ○
+
+    respiratory_structure:
+      gill_cover_visible: true
+      confidence: ○
+
+    appendages:
+      fins:
+        - {name: dorsal, present: true}
+        - {name: adipose, present: true}
+        - {name: anal, present: true}
+        - {name: pelvic, present: true}
+        - {name: pectoral, present: true}
+
+    color_regions:
+      - region: dorsal
+        pattern_type: uniform
+        hex: ["#607040", "#7A8850"]
+        confidence: ○
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#5]
+      - region: flank
+        pattern_type: uniform
+        hex: ["#9AAABB"]
+        confidence: ○
+      - region: caudal_peduncle
+        pattern_type: speckle
+        hex: ["#6A4060", "#7A3A65"]
+        confidence: ○
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#5]
+
+    diagnostic_checklist:
+      - claim: "吻端はまだ丸く、鉤鼻(kype)は発達していない"
+        expected: true
+        severity: required
+        guards_against: premature_kype
+      - claim: "尾柄(尾びれの付け根)付近に紫色のまだら模様が兆候として現れている"
+        expected: true
+        severity: required
+        guards_against: no_caudal_blotch
+      - claim: "側面にまだ銀色が部分的に残っており、完全な婚姻色(calico)には至っていない"
+        expected: true
+        severity: advisory
+        guards_against: premature_full_calico
+
+    reference_photos:
+      # 沿岸回帰段階そのものの一次写真は未確認のため、銀色残存の代替参照として img-ocean-silver を使用(低信頼)
+      - references/images/img-ocean-silver.md
+
+  - stage_id: 6
+    stage_name: {ja: 河川遡上(婚姻色/ブナ), en: River run (spawning / calico)}
+
+    body_shape:
+      descriptor: >
+        成魚体型。オスは吻端が鋭く下方に曲がった鉤鼻(kype)が明瞭に発達し、歯も発達して厳つい輪郭になる。
+      confidence: ◎
+      source_ids: [02_research/life-stage-descriptions.md#6, 04_visual/lifecycle-stages/color-palette.md#6]
+
+    mouth_jaw:
+      kype_present: true
+      teeth_developed: true
+      confidence: ◎
+      source_ids: [02_research/life-stage-descriptions.md#6]
+
+    eye:
+      descriptor: 虹彩は暗色のまま。銀色の輝きは完全に消えている。
+      confidence: ○
+
+    respiratory_structure:
+      gill_cover_visible: true
+      confidence: ○
+
+    appendages:
+      fins:
+        - {name: dorsal, present: true}
+        - {name: adipose, present: true}
+        - {name: anal, present: true}
+        - {name: pelvic, present: true}
+        - {name: pectoral, present: true}
+
+    color_regions:
+      - region: dorsal
+        pattern_type: uniform
+        hex: ["#3A3820"]
+        confidence: ◎
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#6]
+      - region: flank
+        pattern_type: calico_blotchy
+        hex: ["#C1BD91", "#8B2020", "#C03030", "#6A2840", "#2A2014"]
+        confidence: ◎
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#6, references/images/img-chum-breeding-illustration.md]
+      - region: belly
+        pattern_type: uniform
+        hex: ["#3C3838"]
+        confidence: ○
+      - region: fin_edge
+        pattern_type: uniform
+        hex: ["#F0EEEC"]
+        confidence: ○
+
+    diagnostic_checklist:
+      - claim: "オスの吻端に鉤状に曲がったkype(鉤鼻)が明確に見える"
+        expected: true
+        severity: required
+        guards_against: no_kype
+      - claim: "側面の模様は不規則な形・大きさの赤・紫・黒の斑(まだら/calico)であり、境界がぼやけたブロッチ状"
+        expected: true
+        severity: required
+        guards_against: redband_spot_confusion
+      - claim: "均一な大きさ・間隔で並ぶ明るい単色(例: 鮮やかな赤一色)の楕円ドットの列になっていない"
+        expected: true
+        severity: required
+        guards_against: redband_spot_confusion
+      - claim: "体の後方1/3付近が黒っぽく暗化している"
+        expected: true
+        severity: advisory
+        guards_against: missing_posterior_darkening
+      - claim: "銀色の光沢が残っていない(スモルト/海洋期のような銀白ではない)"
+        expected: true
+        severity: advisory
+        guards_against: retained_silvering
+      - claim: "鰓蓋(gill cover)の輪郭が体の輪郭線として描かれている"
+        expected: true
+        severity: advisory
+        guards_against: no_gill_cover
+
+    reference_photos:
+      - references/images/img-chum-breeding-illustration.md
+
+  - stage_id: 7
+    stage_name: {ja: 産卵後(ほっちゃれ), en: Post-spawn (hocchare)}
+
+    body_shape:
+      descriptor: >
+        産卵直後〜死の直前の姿。体型は婚姻色個体と同じで鉤鼻(kype)は残るが、
+        体表は白く擦り切れ、水カビ(サプロレグニア)に覆われた満身創痍の状態。
+      confidence: ○
+      source_ids: [02_research/life-stage-descriptions.md#7]
+
+    mouth_jaw:
+      kype_present: true
+      teeth_developed: true
+      confidence: ○
+      source_ids: [02_research/life-stage-descriptions.md#7]
+
+    eye:
+      descriptor: 虹彩は暗色のまま。
+      confidence: △
+
+    respiratory_structure:
+      gill_cover_visible: true
+      confidence: △
+
+    appendages:
+      fins:
+        - {name: dorsal, present: true}
+        - {name: adipose, present: true}
+        - {name: anal, present: true}
+        - {name: pelvic, present: true}
+        - {name: pectoral, present: true}
+
+    color_regions:
+      - region: flank
+        pattern_type: uniform
+        hex: ["#C8C0BC"]
+        confidence: ◎
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#7, references/images/img-hocchare.md]
+      - region: fungal_patches
+        pattern_type: speckle
+        hex: ["#EDE8E6"]
+        confidence: ◎
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#7]
+      - region: flank_residual_pattern
+        pattern_type: calico_blotchy
+        hex: ["#6E7365", "#5A6050"]
+        confidence: ◎
+        source_ids: [04_visual/lifecycle-stages/color-palette.md#7]
+
+    diagnostic_checklist:
+      - claim: "体表が白っぽく色褪せ、水カビ(綿状の白斑)のような質感が見える"
+        expected: true
+        severity: required
+        guards_against: no_whitening
+      - claim: "婚姻色のまだら模様が薄く退色した形で残っている(完全に消えてはいない)"
+        expected: true
+        severity: required
+        guards_against: premature_full_fade
+      - claim: "鰭や体表がボロボロに傷んだ様子で描かれている(健康な個体のような艶やかさはない)"
+        expected: true
+        severity: advisory
+        guards_against: no_damage_texture
+      - claim: "オスの場合、婚姻色期からの鉤鼻(kype)の形状は保持されている"
+        expected: true
+        severity: advisory
+        guards_against: kype_lost_postmortem
+
+    reference_photos:
+      - references/images/img-hocchare.md

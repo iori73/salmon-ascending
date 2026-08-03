@@ -1,0 +1,26 @@
+{
+  "image": "6/02-hanga-v1.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する紙切り絵/色分解印刷のような構成になっている",
+      "severity": "required",
+      "verdict": "fail",
+      "evidence": "体全体・各ひれに明瞭な黒い輪郭線(キーライン)が入っており、hanga-v1の必須ルール(輪郭線禁止/色面のみで構成)に違反"
+    },
+    {
+      "claim": "グラデーションのないフラットな限定色塗りで構成されている",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "色面自体はグラデーション無くフラット"
+    },
+    {
+      "claim": "側面の模様は不規則な形・大きさの赤・紫・黒の斑(まだら/calico)であり、境界がぼやけたブロッチ状",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "calico状のまだら模様は表現できている"
+    }
+  ],
+  "passed": false,
+  "human_notes": "ユーザー確認済み: ルール違反。要Gemini再生成、プロンプトで「NO outline/keyline」をより強く指示する必要あり。GOOGLE_API_KEY未設定のため保留。"
+}

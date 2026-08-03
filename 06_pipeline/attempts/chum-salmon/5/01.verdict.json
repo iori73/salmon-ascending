@@ -1,0 +1,25 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/5/01.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "吻端はまだ丸く、鉤鼻(kype)は発達していない",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "吻端は丸く、鉤鼻は見られない。"
+    },
+    {
+      "claim": "尾柄(尾びれの付け根)付近に紫色のまだら模様が兆候として現れている",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "尾柄・尻びれ付近にピンク〜紫のまだらが兆候として見られる。"
+    },
+    {
+      "claim": "側面にまだ銀色が部分的に残っており、完全な婚姻色(calico)には至っていない",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "体は主にオリーブ〜銀色で、完全なcalicoには至っていない過渡期の表現。"
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,55 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/6/01.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "オスの吻端に鉤状に曲がったkype(鉤鼻)が明確に見える",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "下顎が鉤状に曲がり、口が開いて歯も見える。kypeが明瞭。"
+    },
+    {
+      "claim": "側面の模様は不規則な形・大きさの赤・紫・黒の斑(まだら/calico)であり、境界がぼやけたブロッチ状",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "赤・紫のブロッチが縦方向に不規則な幅で並び、境界がマーカーのにじみでぼやけている。均一なドット列ではない。"
+    },
+    {
+      "claim": "均一な大きさ・間隔で並ぶ明るい単色(例: 鮮やかな赤一色)の楕円ドットの列になっていない",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "赤一色ではなく紫・黒が混在し、間隔・幅も不均一。"
+    },
+    {
+      "claim": "体の後方1/3付近が黒っぽく暗化している",
+      "severity": "advisory",
+      "verdict": "uncertain",
+      "evidence": "尾柄側はオリーブ〜暗緑色にはなっているが、明確な黒化とまでは言い切れない。"
+    },
+    {
+      "claim": "銀色の光沢が残っていない(スモルト/海洋期のような銀白ではない)",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "銀色の光沢は見られず、オリーブ〜まだら色主体。"
+    },
+    {
+      "claim": "鰓蓋(gill cover)の輪郭が体の輪郭線として描かれている",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "目の後方に鰓蓋を示す曲線が描かれている。"
+    },
+    {
+      "claim": "線がラフな手描き(マーカー/色鉛筆)に見え、写実的なレンダリングになっていない",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "鉛筆の線・マーカーのにじみ・手描きの網掛けパターンで、写実的レンダリングではない。"
+    },
+    {
+      "claim": "色の塗りが完全にフラットな均一ベクター調ではなく、多少のムラ・はみ出しがある",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "マーカーの色ムラ・線からのはみ出しが見られる。"
+    }
+  ],
+  "passed": true
+}

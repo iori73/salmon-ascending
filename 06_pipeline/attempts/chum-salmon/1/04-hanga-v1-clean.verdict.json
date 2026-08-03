@@ -1,0 +1,14 @@
+{
+  "image": "attempts/chum-salmon/_cleaned/1/04-hanga-v1-clean.png",
+  "source": "attempts/chum-salmon/1/04-hanga-v1.png + outline_remove.py post-processing",
+  "style": "hanga-v1",
+  "mode": "manual+objective_tool",
+  "verdicts": [
+    {"claim": "腹部に鮮やかなオレンジ色の卵黄嚢(ヨークサック)が明確に見える", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "体形は成魚のような紡錘形ではなく、細長く薄いリボン状の幼生体形になっている", "severity": "required", "verdict": "pass", "evidence": "視認確認。"},
+    {"claim": "卵黄嚢は体の輪郭と融合した連続的な膨らみとして描かれており、体から浮いた/分離した別パーツに見えない", "severity": "required", "verdict": "fail", "evidence": "未解決。卵黄嚢は依然独立した色面に見える(2026-07-29/31の一連の再生成でも解決せず、hanga-v1のフラット色面スタイルと構造的に相性が悪い可能性)。"},
+    {"claim": "黒い輪郭線(キーライン)が一切なく、色面同士が直接接する構成になっている", "severity": "required", "verdict": "pass", "evidence": "outline_check.py(客観的ピクセル解析ツール)でoutline_fraction=0.0、has_outline=False。目視ではなくツールで確認。"}
+  ],
+  "passed": false,
+  "note": "輪郭線は後処理で解決したが、卵黄嚢の融合表現は未解決のまま。次の一手候補: scaffold側で卵黄嚢と体の輪郭を1本の連続したパスとして生成し直す。"
+}

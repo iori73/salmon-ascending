@@ -1,0 +1,43 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/2/01.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "体側に黒っぽい小判型(縦長楕円)の斑紋(パーマーク)が並んでいる",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "体側に暗色の縦長楕円のパーマークが並んでいる。"
+    },
+    {
+      "claim": "パーマークの間隔・大きさが不規則で、機械的に均等な塗り楕円の繰り返しになっていない",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "楕円の大きさ・間隔にある程度のばらつきがあり、完全な機械的反復ではない。"
+    },
+    {
+      "claim": "背は黄緑〜オリーブ色、腹に向かって淡いクリーム緑に明るくなるカウンターシェーディングがある",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "背はオリーブ、腹は淡いクリーム色でカウンターシェーディングが表現されている。"
+    },
+    {
+      "claim": "鉤鼻(kype)や発達した歯など、成熟婚姻色の特徴が出ていない",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "吻端は丸く、kypeや発達した歯は見られない。"
+    },
+    {
+      "claim": "線がラフな手描き(マーカー/色鉛筆)に見え、写実的なレンダリングになっていない",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "手描きの色鉛筆調で、左側に構図補助線も残る。写実的レンダリングではないが、段階⑥よりは滑らかで整った印象。"
+    },
+    {
+      "claim": "色の塗りが完全にフラットな均一ベクター調ではなく、多少のムラ・はみ出しがある",
+      "severity": "advisory",
+      "verdict": "pass",
+      "evidence": "色鉛筆特有の濃淡ムラが見られる。"
+    }
+  ],
+  "passed": true
+}

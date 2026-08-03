@@ -1,0 +1,20 @@
+{
+  "image": "7/01-hanga-v1.png",
+  "mode": "manual",
+  "verdicts": [
+    {
+      "claim": "体表が白っぽく色褪せ、水カビ(綿状の白斑)のような質感が見える",
+      "severity": "required",
+      "verdict": "pass",
+      "evidence": "白い斑状の質感/退色は表現されている"
+    },
+    {
+      "claim": "生成物が破損/二重像(ゴースト)になっていない",
+      "severity": "required",
+      "verdict": "fail",
+      "evidence": "体が半透明の二重像のように崩れて生成された(生成エラー)"
+    }
+  ],
+  "passed": false,
+  "human_notes": "生成グリッチあり。ユーザー評価: 目を消せば使えるレベル。02で目を除去して採用。"
+}

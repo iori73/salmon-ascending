@@ -1,0 +1,11 @@
+{
+  "image": "06_pipeline/attempts/chum-salmon/4/02.png",
+  "style": "sketch-v1",
+  "mode": "manual",
+  "verdicts": [
+    {"claim": "背は鋼青〜青緑、腹は銀白のカウンターシェーディングが明瞭に付いている", "severity": "required", "verdict": "pass", "evidence": "明瞭。"},
+    {"claim": "体側に黒い斑点や縞模様は無く、無地の銀色", "severity": "required", "verdict": "fail", "evidence": "修正指示(spurious_spots)を与えたが丸い黒点の散在が解消されなかった。"}
+  ],
+  "passed": false,
+  "note": "01の修正リトライ。この後attempt3で「hatchingはOK、dot stipplingはNG」と明示し解決(spec_to_prompt.pyのFAILURE_MODE_NEGATIVES['spurious_spots']に反映)。"
+}
