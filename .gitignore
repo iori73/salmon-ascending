@@ -68,3 +68,14 @@ references/ai-conversations/*_files/
 
 # === Archived / third-party texture remnants (unused) ===
 04_visual/**/_archive/
+
+# === AIとの会話履歴・エディタ内部データ（公開しない） ===
+# 2026-08-03: 公開リポジトリに会話履歴が入っていたため履歴から削除し、再発防止に追加
+.cursor/
+*.vscdb
+*.vscdb.backup
+docs/conversation-history/
+**/ai-conversations/
+# ブラウザで保存したWebページ（AIとの会話ページを含む）
+*_files/
+
